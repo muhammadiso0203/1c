@@ -1,6 +1,6 @@
 import { LayoutDashboard, Zap } from "lucide-react";
-import Abzor from "../pages/abzor/Abzor";
-import Mdmc from "../pages/mdmc/Mdmc";
+import Abzor from "../pages/dashboard/mdmc/abzor/Abzor";
+import Mdmc from "../pages/dashboard/mdmc/Mdmc";
 
 export const menuBar = [
   {

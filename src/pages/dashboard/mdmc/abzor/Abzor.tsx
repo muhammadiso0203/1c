@@ -1,6 +1,6 @@
 import { Activity, DollarSign, TrendingUp, Users } from "lucide-react"
-import FinancialChart from "../../components/charts/financialChart"
-import ExpenseChart from "../../components/charts/struktursChart"
+import FinancialChart from "../../../../components/charts/financialChart"
+import ExpenseChart from "../../../../components/charts/struktursChart"
 
 const statistic = [
   {
@@ -108,8 +108,8 @@ const Abzor = () => {
         </div>
       </div>
       <div className="w-full grid grid-cols-2 gap-9 mt-5">
-        <FinancialChart/>
-        <ExpenseChart/>
+        <FinancialChart />
+        <ExpenseChart />
       </div>
     </>
   )
