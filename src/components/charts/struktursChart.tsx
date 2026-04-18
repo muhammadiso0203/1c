@@ -11,8 +11,8 @@ const data = [
 
 const SimpleChart = () => {
   return (
-       <div style={{ width: '100%', height: 400, backgroundColor: '#fff', padding: '30px', borderRadius: '10px', border: "1px solid #E5E7EB" }}>
-       <h3 className='font-semibold text-[18px]'>
+       <div className="w-full h-[400px] bg-white dark:bg-slate-800 p-[20px] rounded-[10px] border border-gray-200 dark:border-slate-700 transition-colors duration-300 dark:[&_text]:fill-gray-300! dark:[&_.recharts-default-tooltip]:bg-slate-800! dark:[&_.recharts-default-tooltip]:border-slate-700!">
+       <h3 className='font-semibold text-[18px] text-gray-900 dark:text-white mb-6 transition-colors duration-300'>
         Структура расходов
       </h3>
       <ResponsiveContainer>
@@ -23,14 +23,13 @@ const SimpleChart = () => {
             cx="50%"
             cy="50%"
             outerRadius={100}
-            // Eng oson yo'li: chiziqlar va yozuvlarni avtomatik chiqarish
             label={({ name, value }) => `${name}: ${value}%`} 
           >
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
           </Pie>
-          <Tooltip />
+          <Tooltip wrapperClassName="dark:!bg-slate-800 dark:!border-slate-700" contentStyle={{ borderRadius: '10px', backgroundColor: 'white'}} itemStyle={{color: "var(--tooltip-text)" }}/>
         </PieChart>
       </ResponsiveContainer>
     </div>

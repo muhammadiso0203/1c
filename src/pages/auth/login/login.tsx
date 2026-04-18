@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLogin } from "./service/useLogin";
+import { useNavigate } from "react-router";
+// import { useLogin } from "./service/useLogin";
 import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "../../../components/ui/button";
+import { Input } from "../../../components/ui/input";
+import { Label } from "../../../components/ui/label";
 import {
   Card,
   CardContent,
@@ -13,7 +13,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "../../../components/ui/card";
 import { Eye, EyeOff, Loader2, LockKeyhole, User2 } from "lucide-react";
 
 const Login = () => {
@@ -22,7 +22,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const { mutate, isPending } = useLogin();
+//   const { mutate, isPending } = useLogin();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,27 +32,27 @@ const Login = () => {
       return;
     }
 
-    mutate(
-      { username, password },
-      {
-        onSuccess: () => {
-          toast.success("Muvaffaqiyatli tizimga kirdingiz", {
-            position: "top-right"
-          });
-          navigate("/admin/dashboard");
-        },
-        onError: (error: any) => {
-          // Backenddan kelgan xatolik xabari yoki umumiy xabar
-          const errorMsg =
-            error.response?.data?.message?.uz || "Login yoki parol noto'g'ri!";
+    // mutate(
+    //   { username, password },
+    //   {
+    //     onSuccess: () => {
+    //       toast.success("Muvaffaqiyatli tizimga kirdingiz", {
+    //         position: "top-right"
+    //       });
+    //       navigate("/admin/dashboard");
+    //     },
+    //     onError: (error: any) => {
+    //       // Backenddan kelgan xatolik xabari yoki umumiy xabar
+    //       const errorMsg =
+    //         error.response?.data?.message?.uz || "Login yoki parol noto'g'ri!";
 
-          toast.error("Kirishda xatolik!", {
-            description: errorMsg,
-            duration: 4000, 
-          });
-        },
-      }
-    );
+    //       toast.error("Kirishda xatolik!", {
+    //         description: errorMsg,
+    //         duration: 4000, 
+    //       });
+    //     },
+    //   }
+    // );
   };
 
   return (
@@ -125,15 +125,16 @@ const Login = () => {
             </div>
 
             <Button
+            onClick={() => navigate('/main-layout')}
               type="submit"
-              disabled={isPending}
+            //   disabled={isPending}
               className="w-full h-12 mt-2 bg-slate-900 hover:bg-black text-white font-bold rounded-xl active:scale-[0.98] transition-all"
             >
-              {isPending ? (
+              {/* {isPending ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
-              ) : (
-                "Tizimga kirish"
-              )}
+              ) : ( */}
+                Tizimga kirish
+              {/* )} */}
             </Button>
           </form>
         </CardContent>

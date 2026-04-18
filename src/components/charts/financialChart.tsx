@@ -21,8 +21,8 @@ const data = [
 
 const FinancialChart = () => {
   return (
-    <div style={{ width: '100%', height: 400, backgroundColor: '#fff', padding: '30px', borderRadius: '10px', border: "1px solid #E5E7EB" }}>
-      <h3 className='font-semibold text-[18px]'>
+    <div className="w-full h-[400px] bg-white dark:bg-slate-800 p-[20px] rounded-[10px] border border-gray-200 dark:border-slate-700 transition-colors duration-300 dark:[&_text]:fill-gray-300! dark:[&_line.recharts-cartesian-grid-line]:stroke-slate-700! dark:[&_.recharts-default-tooltip]:bg-slate-800! dark:[&_.recharts-default-tooltip]:border-slate-700!">
+      <h3 className='font-semibold text-[18px] text-gray-900 dark:text-white mb-4 transition-colors duration-300'>
         Основные финансовые показатели (млн сум)
       </h3>
       <ResponsiveContainer width="100%" height="100%">
@@ -30,7 +30,7 @@ const FinancialChart = () => {
           data={data}
           margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
         >
-          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+          <CartesianGrid strokeDasharray="3 3" vertical={true} stroke="#f0f0f0" />
           <XAxis
             dataKey="name"
             axisLine={true}
@@ -44,14 +44,13 @@ const FinancialChart = () => {
             ticks={[0, 95, 190, 285, 380]}
           />
           <Tooltip
-
             itemSorter={(item) => {
               if (item.name === 'Выручка') return 1;
               if (item.name === 'Расходы') return 2;
               if (item.name === 'Прибыль') return 3;
               return 4;
             }}
-            contentStyle={{ borderRadius: '10px', border: '1px solid #ddd' }}
+            contentStyle={{ borderRadius: '10px', backgroundColor: 'white' }}
           />
           <Legend
             verticalAlign="bottom"
