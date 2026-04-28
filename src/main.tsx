@@ -4,12 +4,15 @@ import './index.css'
 import App from './App.tsx'
 import { Toaster } from 'sonner'
 import { BrowserRouter } from 'react-router'
+import { TooltipProvider } from './components/ui/tooltip'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Toaster position='top-right' />
-      <App />
-    </BrowserRouter>
+    <TooltipProvider>
+      <BrowserRouter>
+        <Toaster position='top-right' />
+        <App />
+      </BrowserRouter>
+    </TooltipProvider>
   </StrictMode>,
 )

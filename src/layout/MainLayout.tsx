@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Suspense, useMemo } from "react";
 import { menuBar } from "../data/menuBar";
 import { Calendar, Moon, Sun, User2, ArrowLeft, ArrowRight } from "lucide-react";
 import GlobalFilter from "../components/GlobalFilter";
@@ -14,9 +14,83 @@ const MainLayout = () => {
         year: 'numeric'
     });
 
-    const pageTitle = selectedItem?.name === "Общий обзор" ? "Общий обзор ERP-системы 1C" : selectedItem?.name;
-    const pageSubtitle = `Сводная панель по всем модулям системы - актуальные показатели на ${today}`;
+    const currentPage = [
+        {
+            id: "1",
+            title: "Общий обзор ERP-системы 1С",
+            desc: `Сводная панель по всем модулям системы - актуальные показатели на ${today}`
+        },
+        {
+            id: "2",
+            title: "Интеллектуальный учет электроэнергии АМИ/МДМС",
+            desc: "Система автоматизированного учета и управления потреблением"
+        },
+        {
+            id: "3",
+            title: "Цифровизация финансовых показателей",
+            desc: "Финансовая аналитика и прогнозирование"
+        },
+        {
+            id: "4",
+            title: "Получение и продажа электроэнергии",
+            desc: "Учет контрактов, объемов закупок и реализации энергии"
+        },
+        {
+            id: "5",
+            title: "Интеграция с soliq.uz",
+            desc: "Управление электронными счет-фактурами и налоговыми документами"
+        },
+        {
+            id: "6",
+            title: "Централизация бухгалтерии",
+            desc: "Единая система управления бухгалтерским учетом всех филиалов"
+        },
+        {
+            id: "7",
+            title: "Параллельный расчет МСФО",
+            desc: "Учет и формирование отчетности по международным стандартам"
+        },
+        {
+            id: "8",
+            title: "Бюджетирование",
+            desc: "Планирование бюджетов, контроль лимитов и анализ исполнения"
+        },
+        {
+            id: "9",
+            title: "Казначейство",
+            desc: "Управление ликвидностью, расчетными счетами и платежным календарем"
+        },
+        {
+            id: "10",
+            title: "Планирование денежных средств",
+            desc: "Прогнозирование денежных потоков (Cash Flow) и отчетность"
+        },
+        {
+            id: "11",
+            title: "Управление персоналом (Кадры)",
+            desc: "Управление штатным расписанием и учет движения сотрудников"
+        },
+        {
+            id: "12",
+            title: "Расчет заработной платы",
+            desc: "Автоматизированное начисление ЗП и учет рабочего времени"
+        },
+        {
+            id: "13",
+            title: "Управление закупками",
+            desc: "Контроль процесса снабжения, тендеров и исполнения договоров"
+        },
+        {
+            id: "14",
+            title: "Складской учет",
+            desc: "Управление остатками, приемка, отгрузка и инвентаризация ТМЦ"
+        }
+    ];
 
+    const currentHeaderInfo = currentPage.find(item => item.id === activeId) || {
+        title: selectedItem?.name || "",
+        desc: ""
+    };
 
     const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'));
 
@@ -30,6 +104,12 @@ const MainLayout = () => {
             setIsDark(true);
         }
     };
+    
+    // Memoizing the current page to prevent massive re-renders when the sidebar toggles
+    const RenderedPage = useMemo(() => {
+        if (!CurrentPage) return null;
+        return <CurrentPage />;
+    }, [CurrentPage]);
 
     return (
         <div className="flex h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
@@ -126,10 +206,10 @@ const MainLayout = () => {
                             {/* Page Header */}
                             <div className="mb-8">
                                 <h1 className="text-[28px] font-bold text-slate-900 dark:text-white transition-colors duration-300">
-                                    {pageTitle}
+                                    {currentHeaderInfo.title}
                                 </h1>
                                 <p className="text-slate-500 dark:text-slate-400 text-[14px] mt-1 transition-colors duration-300">
-                                    {pageSubtitle}
+                                    {currentHeaderInfo.desc}
                                 </p>
                             </div>
 
@@ -140,7 +220,16 @@ const MainLayout = () => {
 
                             {/* Page Content */}
                             <div className="min-h-0">
-                                <CurrentPage />
+                                <Suspense fallback={
+                                    <div className="flex h-[400px] w-full items-center justify-center">
+                                        <div className="flex flex-col items-center gap-3">
+                                            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                                            <p className="text-gray-500 dark:text-gray-400 font-medium">Yuklanmoqda...</p>
+                                        </div>
+                                    </div>
+                                }>
+                                    {RenderedPage}
+                                </Suspense>
                             </div>
                         </div>
                     ) : (

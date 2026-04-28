@@ -42,7 +42,7 @@ export default function SimpleDashboardChart() {
           <Legend />
           
           {/* Ustun (Xodimlar soni) - Chap o'qqa bog'langan */}
-          <Bar yAxisId="left" dataKey="employees" name="Сотрудников" fill="#3b82f6" />
+          <Bar yAxisId="left" dataKey="employees" name="Сотрудников" fill="#3b82f6" barSize={70} radius={[6,6,0,0]}/>
           
           {/* Chiziqlar (FOT va Oylik) - O'ng o'qqa bog'langan */}
           <Line yAxisId="right" type="monotone" dataKey="fot" name="ФОТ (млн)" stroke="#10b981" />

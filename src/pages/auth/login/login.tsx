@@ -14,7 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../../components/ui/card";
-import { Eye, EyeOff, Loader2, LockKeyhole, User2 } from "lucide-react";
+import { Eye, EyeOff, LockKeyhole, User2 } from "lucide-react";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);

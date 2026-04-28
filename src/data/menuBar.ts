@@ -1,12 +1,4 @@
-import Bugxalteriya from "../pages/dashboard/dugxalteriya/bugxalteriya";
-import Raschet from "../pages/dashboard/raschet/raschet";
-import Byudjetirovaniya from "../pages/dashboard/byudjetirovaniya/byudjetirovaniya";
-import Kaznachetstya from "../pages/dashboard/kaznacheystya/kaznachetstya";
-import Planirovaniya from "../pages/dashboard/planirovaniya/planirovaniya";
-import Kadri from "../pages/dashboard/kadri/kadri";
-import Zarplata from "../pages/dashboard/zarplata/zarplata";
-import Zakupki from "../pages/dashboard/zakupki/zakupki";
-import Sklat from "../pages/dashboard/sklat/sklat";
+import { lazy } from "react";
 import { 
   LayoutGrid, 
   Zap, 
@@ -22,11 +14,22 @@ import {
   Calculator,
   DollarSign
 } from "lucide-react";
-import Abzor from "../pages/dashboard/abzor/Abzor";
-import Mdmc from "../pages/dashboard/mdmc/Mdmc";
-import Finans from "../pages/dashboard/finans/finans";
-import Polucheniya from "../pages/dashboard/polucheniya/polucheniya";
-import Soliq from "../pages/dashboard/document-soliq/soliq";
+
+// Lazy loading components to improve performance and prevent lag
+const Bugxalteriya = lazy(() => import("../pages/dashboard/dugxalteriya/bugxalteriya"));
+const Raschet = lazy(() => import("../pages/dashboard/raschet/raschet"));
+const Byudjetirovaniya = lazy(() => import("../pages/dashboard/byudjetirovaniya/byudjetirovaniya"));
+const Kaznachetstya = lazy(() => import("../pages/dashboard/kaznacheystya/kaznachetstya"));
+const Planirovaniya = lazy(() => import("../pages/dashboard/planirovaniya/planirovaniya"));
+const Kadri = lazy(() => import("../pages/dashboard/kadri/kadri"));
+const Zarplata = lazy(() => import("../pages/dashboard/zarplata/zarplata"));
+const Zakupki = lazy(() => import("../pages/dashboard/zakupki/zakupki"));
+const Sklat = lazy(() => import("../pages/dashboard/sklat/sklat"));
+const Abzor = lazy(() => import("../pages/dashboard/abzor/Abzor"));
+const Mdmc = lazy(() => import("../pages/dashboard/mdmc/Mdmc"));
+const Finans = lazy(() => import("../pages/dashboard/finans/finans"));
+const Polucheniya = lazy(() => import("../pages/dashboard/polucheniya/polucheniya"));
+const Soliq = lazy(() => import("../pages/dashboard/document-soliq/soliq"));
 
 
 export const menuBar = [

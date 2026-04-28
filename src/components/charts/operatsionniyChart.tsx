@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   ComposedChart,
   Line,
@@ -72,7 +71,7 @@ const EfficiencyChart = () => {
           />
           
           {/* Pastdagi izohlar (Legend) */}
-          <Legend iconType="circle" wrapperStyle={{ paddingTop: '20px', paddingBottom: "20px" }} />
+          <Legend iconType="circle" wrapperStyle={{ paddingBottom: "40px" }} />
           
           {/* Ustunlar (Bars) */}
           <Bar yAxisId="left" dataKey="Документов" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={35} />
