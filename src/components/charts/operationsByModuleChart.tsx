@@ -21,7 +21,7 @@ const data = [
 const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white p-4 border border-gray-100 rounded-lg shadow-lg">
+      <div className="bg-white p-4 border border-gray-100 rounded-lg">
         <p className="font-bold text-gray-700 mb-1">{payload[0].payload.name}</p>
         <p className="text-blue-400 font-normal">
           Операций за месяц : {payload[0].value}

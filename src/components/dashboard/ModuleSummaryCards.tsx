@@ -149,7 +149,7 @@ const ModuleSummaryCards = () => {
       {moduleData.map((item, index) => (
         <div 
           key={index} 
-          className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-300 group"
+          className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-5 transition-all duration-300 group"
         >
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 rounded-lg bg-gray-50 dark:bg-slate-700/50 group-hover:scale-110 transition-transform duration-300">

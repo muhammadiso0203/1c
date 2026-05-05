@@ -13,7 +13,7 @@ const GlobalFilter = () => {
     };
 
     return (
-        <div className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700/60 rounded-[12px] shadow-sm flex flex-col transition-colors duration-300 overflow-hidden">
+        <div className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700/60 rounded-[12px] flex flex-col transition-colors duration-300 overflow-hidden">
             {/* Top Row: Filters and Reset */}
             <div className="px-6 py-4 flex items-center gap-8">
                 {/* Location Select */}

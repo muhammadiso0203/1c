@@ -41,7 +41,7 @@ const CustomTooltip = ({ active, payload }: any) => {
 
 const ErpEfficiencyChart = () => {
   return (
-    <div className="w-full h-[450px] bg-white dark:bg-slate-800 p-5 rounded-xl border border-gray-200 dark:border-slate-700 transition-all duration-300 shadow-sm">
+    <div className="w-full h-[450px] bg-white dark:bg-slate-800 p-5 rounded-xl border border-gray-200 dark:border-slate-700 transition-all duration-300">
       <h3 className="font-bold text-lg text-gray-800 dark:text-white mb-8">
         Эффективность модулей ERP (%)
       </h3>

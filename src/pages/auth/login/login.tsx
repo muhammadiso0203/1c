@@ -57,9 +57,9 @@ const Login = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-[#020817] p-4">
-      <Card className="w-full max-w-100 border-none shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-[24px] overflow-hidden">
+      <Card className="w-full max-w-100 border-none rounded-[24px] overflow-hidden">
         <CardHeader className="pt-10 pb-6 text-center space-y-4">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-lg">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 text-white">
             <LockKeyhole className="h-7 w-7" />
           </div>
           <div className="space-y-1.5">

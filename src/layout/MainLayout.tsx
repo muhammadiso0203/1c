@@ -162,7 +162,7 @@ const MainLayout = () => {
             </div>
 
             {/* O'ng tomon - Sahifalar chiqadigan joy */}
-            <div className="flex-1 bg-[#f8fafc] dark:bg-slate-950 overflow-auto relative transition-colors duration-300">
+            <div className="flex-1 bg-white dark:bg-slate-950 overflow-auto relative transition-colors duration-300">
                 {/* User Info (Absolute o'ng burchakda turadi, contentni pastga surmaydi) */}
                 <div className="absolute top-8 right-8 z-20 flex items-center gap-4">
                     {/* Tema O'zgartirish Tugmasi */}

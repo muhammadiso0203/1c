@@ -67,7 +67,7 @@ const EfficiencyChart = () => {
           
           {/* Kursor olib borganda chiqadigan ma'lumot oynasi */}
           <Tooltip 
-            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
+            contentStyle={{ borderRadius: '8px', border: 'none' }}
           />
           
           {/* Pastdagi izohlar (Legend) */}

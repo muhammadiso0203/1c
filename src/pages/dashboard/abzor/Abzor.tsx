@@ -1,4 +1,4 @@
-import { Activity, DollarSign, TrendingUp, Users } from "lucide-react"
+import { Activity, Loader2 } from "lucide-react"
 import FinancialChart from "../../../components/charts/financialChart"
 import ExpenseChart from "../../../components/charts/struktursChart"
 import EfficiencyChart from "../../../components/charts/operatsionniyChart"
@@ -8,90 +8,43 @@ import ModuleIndicatorsChart from "../../../components/charts/moduleIndicatorsCh
 import ErpEfficiencyChart from "../../../components/charts/erpEfficiencyChart"
 import ModuleSummaryCards from "../../../components/dashboard/ModuleSummaryCards"
 import StatsCards from "../../../components/dashboard/StatsCards"
+import UzbekistanInteractiveMap from "../../../components/dashboard/UzbekistanInteractiveMap"
+import { useMetrics } from "./service/useMetrics"
 
-const statistic = [
-  {
-    name: "Всего модулей",
-    number: "14",
-    desc: "Все активны"
-  },
-  {
-    name: "Общая эффективность",
-    number: "94.8%",
-    desc: "+2.3% к прошлому месяцу"
-  },
-  {
-    name: "Операций за месяц",
-    number: "12,847",
-    desc: "+15.2% к прошлому месяцу"
-  },
-  {
-    name: "Экономия от автоматизации",
-    number: "47 млн sum",
-    desc: "За текущий квартал"
-  }
-]
-
-const dashboardStats = [
-  {
-    title: "Общая выручка",
-    value: "1,935 млн сум",
-    trend: "+18.2% за полугодие",
-    icon: DollarSign,
-  },
-  {
-    title: "Чистая прибыль",
-    value: "749 млн сум",
-    trend: "+15.7% за полугодие",
-    icon: TrendingUp,
-  },
-  {
-    title: "Всего сотрудников",
-    value: "1,247",
-    trend: "+4.0% за полугодие",
-    icon: Users,
-  },
-  {
-    title: "Операций обработано",
-    value: "58,047",
-    trend: "За полугодие 2026",
-    icon: Activity,
-  },
-]
 
 const Abzor = () => {
+  const { data, isLoading } = useMetrics();
   return (
     <>
-      <div className="w-full bg-blue-600 dark:bg-blue-700 rounded-[12px] p-6 text-white shadow-lg transition-colors duration-300">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="flex flex-col gap-1">
-            <p className="text-blue-100 text-[14px] font-medium">{statistic[0].name}</p>
-            <h2 className="text-4xl font-bold my-1">{statistic[0].number}</h2>
-            <p className="text-blue-100 text-[12px]">{statistic[0].desc}</p>
+      <div className="w-full bg-blue-700 dark:bg-blue-700 rounded-[12px] p-6 text-white transition-colors duration-300">
+        {isLoading && (
+          <div className="w-full flex items-center justify-center py-4">
+            <Loader2 className="w-8 h-8 text-white animate-spin" />
           </div>
+        )}
 
-          <div className="flex flex-col gap-1">
-            <p className="text-blue-100 text-[14px] font-medium">{statistic[1].name}</p>
-            <h2 className="text-4xl font-bold my-1">{statistic[1].number}</h2>
-            <p className="text-blue-100 text-[12px]">{statistic[1].desc}</p>
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <p className="text-blue-100 text-[14px] font-medium">{statistic[2].name}</p>
-            <h2 className="text-4xl font-bold my-1">{statistic[2].number}</h2>
-            <p className="text-blue-100 text-[12px]">{statistic[2].desc}</p>
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <p className="text-blue-100 text-[14px] font-medium">{statistic[3].name}</p>
-            <h2 className="text-4xl font-bold my-1">{statistic[3].number}</h2>
-            <p className="text-blue-100 text-[12px]">{statistic[3].desc}</p>
-          </div>
+        <div className="grid grid-cols-4 gap-8">
+          {data?.map((dashboard, index) => (
+            <div key={index} className="flex flex-col gap-1">
+              <p className="text-blue-100 text-[14px] font-medium">
+                {dashboard.label}
+              </p>
+              <h2 className="text-3xl font-semibold">
+                {dashboard.value}
+              </h2>
+              <p className="text-blue-100 text-[12px]">
+                {dashboard.description}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
 
-      <StatsCards stats={dashboardStats} />
+      <StatsCards />
 
+      <div className="w-full mt-9">
+        <UzbekistanInteractiveMap />
+      </div>
 
 
       <div className="w-full grid grid-cols-2 gap-9 mt-5">
@@ -114,6 +67,7 @@ const Abzor = () => {
       <div className="w-full mt-9">
         <ModuleSummaryCards />
       </div>
+
 
       <div className="w-full bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-slate-700/50 rounded-xl p-6 mt-9 flex gap-4">
         <Activity className="text-blue-600 dark:text-blue-400 w-6 h-6" />
