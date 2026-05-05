@@ -18,11 +18,11 @@ const data = [
   { name: 'Июн', revenue: 367, expenses: 220 },
 ];
 
-const CustomLegend = (props) => {
+const CustomLegend = (props: any) => {
   const { payload } = props;
   return (
     <div className="flex justify-center items-center gap-10 mt-2">
-      {payload.map((entry, index) => (
+      {payload.map((entry: any, index: number) => (
         <div key={`item-${index}`} className="flex items-center gap-3">
           <div className="flex items-center justify-center relative w-4">
             <div
