@@ -28,3 +28,11 @@ export interface IFinance {
     desc: string;
 }
 
+export interface Polucheniya {
+    id: number;
+    name: string;
+    value: string;
+    desc: string;
+}
+
+

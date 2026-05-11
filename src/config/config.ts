@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const token = axios.create({
-    baseURL: "http://94.158.50.204:40080/api",
+    baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
 export default token
