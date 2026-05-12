@@ -25,7 +25,7 @@ export default function SimpleDashboardChart() {
       <h3 className='font-semibold text-[18px] text-gray-900 dark:text-white mb-4 transition-colors duration-300'>
         Персонал и ФОТ
       </h3>
-      <ResponsiveContainer width="100%" height="85%">
+      <ResponsiveContainer width="100%" height={300}>
         <ComposedChart data={data}>
           {/* Orqa fon chiziqlari */}
           <CartesianGrid strokeDasharray="3 3" />
