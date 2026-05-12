@@ -4,26 +4,61 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
+const REGION_COLORS: Record<string, string> = {
+  "Qoraqalpog'iston": "fill-red-400 dark:fill-red-600",
+  "Xorazm": "fill-orange-400 dark:fill-orange-600",
+  "Navoiy": "fill-amber-400 dark:fill-amber-600",
+  "Buxoro": "fill-yellow-400 dark:fill-yellow-600",
+  "Qashqadaryo": "fill-lime-400 dark:fill-lime-600",
+  "Surxondaryo": "fill-green-400 dark:fill-green-600",
+  "Samarqand": "fill-emerald-400 dark:fill-emerald-600",
+  "Jizzax": "fill-teal-400 dark:fill-teal-600",
+  "Sirdaryo": "fill-cyan-400 dark:fill-cyan-600",
+  "Toshkent vil.": "fill-sky-400 dark:fill-sky-600",
+  "Toshkent shahri": "fill-blue-400 dark:fill-blue-600",
+  "Namangan": "fill-indigo-400 dark:fill-indigo-600",
+  "Andijon": "fill-violet-400 dark:fill-violet-600",
+  "Farg'ona": "fill-purple-400 dark:fill-purple-600",
+};
+
 const ORGANIZATIONS = [
   {
     name: '"HUDUDIY ELEKTR TARMOQLARI" AJ',
     regions: [
       { region: "Qoraqalpog'iston", companies: ["QR Elektr Tarmoqlari", "Nukus Energo", "Amudaryo Elektr"] },
-      { region: "Andijon",          companies: ["Andijon Elektr", "Asaka Energo", "Xo'jaobod Tarmoq"] },
-      { region: "Toshkent shahri",  companies: ["Toshkent Shahar Elektr", "Chilonzor Energo", "Yunusobod Tarmoq"] },
-      { region: "Samarqand",        companies: ["Samarqand Elektr", "Kattaqo'rg'on Energo", "Urgut Tarmoq"] },
-      { region: "Buxoro",           companies: ["Buxoro Elektr", "G'ijduvon Energo", "Kogon Tarmoq"] },
-      { region: "Farg'ona",         companies: ["Farg'ona Elektr", "Qo'qon Energo", "Marg'ilon Tarmoq"] },
-      { region: "Namangan",         companies: ["Namangan Elektr", "Chortoq Energo", "Pop Tarmoq"] },
-      { region: "Qashqadaryo",      companies: ["Qarshi Elektr", "Shahrisabz Energo", "Koson Tarmoq"] },
-      { region: "Surxondaryo",      companies: ["Termiz Elektr", "Denov Energo", "Boysun Tarmoq"] },
-      { region: "Jizzax",           companies: ["Jizzax Elektr", "Zafarobod Energo", "G'allaorol Tarmoq"] },
-      { region: "Sirdaryo",         companies: ["Guliston Elektr", "Yangiyer Energo", "Boyovut Tarmoq"] },
-      { region: "Toshkent vil.",    companies: ["Toshkent Viloyat Elektr", "Olmaliq Energo", "Angren Tarmoq"] },
-      { region: "Navoiy",           companies: ["Navoiy Elektr", "Zarafshon Energo", "Uchquduq Tarmoq"] },
-      { region: "Xorazm",           companies: ["Urganch Elektr", "Xiva Energo", "Bog'ot Tarmoq"] },
+      { region: "Andijon", companies: ["Andijon Elektr", "Asaka Energo", "Xo'jaobod Tarmoq"] },
+      { region: "Toshkent shahri", companies: ["Toshkent Shahar Elektr", "Chilonzor Energo", "Yunusobod Tarmoq"] },
+      { region: "Samarqand", companies: ["Samarqand Elektr", "Kattaqo'rg'on Energo", "Urgut Tarmoq"] },
+      { region: "Buxoro", companies: ["Buxoro Elektr", "G'ijduvon Energo", "Kogon Tarmoq"] },
+      { region: "Farg'ona", companies: ["Farg'ona Elektr", "Qo'qon Energo", "Marg'ilon Tarmoq"] },
+      { region: "Namangan", companies: ["Namangan Elektr", "Chortoq Energo", "Pop Tarmoq"] },
+      { region: "Qashqadaryo", companies: ["Qarshi Elektr", "Shahrisabz Energo", "Koson Tarmoq"] },
+      { region: "Surxondaryo", companies: ["Termiz Elektr", "Denov Energo", "Boysun Tarmoq"] },
+      { region: "Jizzax", companies: ["Jizzax Elektr", "Zafarobod Energo", "G'allaorol Tarmoq"] },
+      { region: "Sirdaryo", companies: ["Guliston Elektr", "Yangiyer Energo", "Boyovut Tarmoq"] },
+      { region: "Toshkent vil.", companies: ["Toshkent Viloyat Elektr", "Olmaliq Energo", "Angren Tarmoq"] },
+      { region: "Navoiy", companies: ["Navoiy Elektr", "Zarafshon Energo", "Uchquduq Tarmoq"] },
+      { region: "Xorazm", companies: ["Urganch Elektr", "Xiva Energo", "Bog'ot Tarmoq"] },
     ]
   }
+];
+
+
+const Region_colors = [
+  { name: "Qoraqalpog'iston", color: "fill-red-400 dark:fill-red-600" },
+  { name: "Andijon", color: "fill-violet-400 dark:fill-violet-600" },
+  { name: "Toshkent shahri", color: "fill-blue-400 dark:fill-blue-600" },
+  { name: "Samarqand", color: "fill-emerald-400 dark:fill-emerald-600" },
+  { name: "Buxoro", color: "fill-yellow-400 dark:fill-yellow-600" },
+  { name: "Farg'ona", color: "fill-purple-400 dark:fill-purple-600" },
+  { name: "Namangan", color: "fill-indigo-400 dark:fill-indigo-600" },
+  { name: "Qashqadaryo", color: "fill-green-400 dark:fill-green-600" },
+  { name: "Surxondaryo", color: "fill-rose-400 dark:fill-rose-600" },
+  { name: "Jizzax", color: "fill-cyan-400 dark:fill-cyan-600" },
+  { name: "Sirdaryo", color: "fill-teal-400 dark:fill-teal-600" },
+  { name: "Toshkent vil.", color: "fill-lime-400 dark:fill-lime-600" },
+  { name: "Navoiy", color: "fill-orange-400 dark:fill-orange-600" },
+  { name: "Xorazm", color: "fill-pink-400 dark:fill-pink-600" },
 ];
 
 const MAP_DATA = {
@@ -50,6 +85,7 @@ const UzbekistanInteractiveMap: React.FC = () => {
   const [hoveredRegion, setHoveredRegion] = React.useState<string | null>(null);
   const [selectedRegions, setSelectedRegions] = React.useState<Set<string>>(new Set());
   const [expandedRegions, setExpandedRegions] = React.useState<Set<string>>(new Set());
+  const [selectedCompanies, setSelectedCompanies] = React.useState<Set<string>>(new Set());
   const [zoomTransform, setZoomTransform] = React.useState({ scale: 1, x: 0, y: 0 });
 
   const toggleExpand = (regionName: string, e: React.MouseEvent) => {
@@ -62,6 +98,16 @@ const UzbekistanInteractiveMap: React.FC = () => {
     });
   };
 
+  const toggleCompany = (company: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedCompanies(prev => {
+      const next = new Set(prev);
+      if (next.has(company)) next.delete(company);
+      else next.add(company);
+      return next;
+    });
+  };
+
   // Build a lookup: region name -> companies[]
   const companiesByRegion: Record<string, string[]> = {};
   ORGANIZATIONS.forEach(org => {
@@ -70,33 +116,42 @@ const UzbekistanInteractiveMap: React.FC = () => {
     });
   });
 
-  const toggleRegion = (regionName: string) => {
-    setSelectedRegions(prev => {
-      const next = new Set(prev);
-      if (next.has(regionName)) {
-        next.delete(regionName);
-      } else {
-        next.add(regionName);
-      }
-      return next;
-    });
-  };
-
-  const handleRegionClick = (e: React.MouseEvent<SVGPathElement>, regionName: string) => {
-    toggleRegion(regionName);
-    // Zoom only when exactly one region will be selected after toggle
-    const willBeSelected = !selectedRegions.has(regionName);
-    if (willBeSelected && selectedRegions.size === 0) {
-      const bbox = e.currentTarget.getBBox();
+  const zoomToRegion = (regionId: string) => {
+    const el = document.getElementById(`region-${regionId}`) as unknown as SVGGraphicsElement | null;
+    if (el) {
+      const bbox = el.getBBox();
       const centerX = bbox.x + bbox.width / 2;
       const centerY = bbox.y + bbox.height / 2;
       const targetScale = 2.2;
       const tx = (1000 / 2) - centerX * targetScale;
       const ty = (652 / 2) - centerY * targetScale;
       setZoomTransform({ scale: targetScale, x: tx, y: ty });
-    } else {
+    }
+  };
+
+  const toggleRegion = (regionId: string, regionName: string) => {
+    setSelectedRegions(prev => {
+      const next = new Set(prev);
+      if (next.has(regionName)) {
+        next.delete(regionName);
+        if (next.size === 0) {
+          setZoomTransform({ scale: 1, x: 0, y: 0 });
+        }
+      } else {
+        next.add(regionName);
+      }
+      return next;
+    });
+
+    if (!selectedRegions.has(regionName)) {
+      zoomToRegion(regionId);
+    } else if (selectedRegions.size === 1 && selectedRegions.has(regionName)) {
       setZoomTransform({ scale: 1, x: 0, y: 0 });
     }
+  };
+
+  const handleRegionClick = (_e: React.MouseEvent<SVGPathElement>, regionId: string, regionName: string) => {
+    toggleRegion(regionId, regionName);
   };
 
   const resetZoom = () => {
@@ -117,12 +172,12 @@ const UzbekistanInteractiveMap: React.FC = () => {
             {/* Map Section */}
             <div className="lg:col-span-8 flex justify-center items-center bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-4 border border-slate-200 dark:border-slate-700/50 relative group overflow-hidden">
               {selectedRegions.size > 0 && (
-                <button 
+                <button
                   onClick={resetZoom}
                   className="absolute top-4 left-4 z-20 bg-white/80 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-900 dark:text-white p-2 rounded-full border border-slate-200 dark:border-slate-700 transition-all backdrop-blur-sm"
                   title="Xaritani tiklash"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>
                 </button>
               )}
               <svg
@@ -130,20 +185,21 @@ const UzbekistanInteractiveMap: React.FC = () => {
                 className="w-full h-auto transition-all duration-700 ease-in-out"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <g style={{ 
+                <g style={{
                   transform: `translate(${zoomTransform.x}px, ${zoomTransform.y}px) scale(${zoomTransform.scale})`,
                   transition: "transform 700ms cubic-bezier(0.4, 0, 0.2, 1)"
                 }}>
                   {MAP_DATA.regions.map((region) => (
                     <path
                       key={region.id}
+                      id={`region-${region.id}`}
                       d={region.path}
-                      onClick={(e) => handleRegionClick(e, region.name)}
+                      onClick={(e) => handleRegionClick(e, region.id, region.name)}
                       className={cn(
-                        "transition-all duration-300 cursor-pointer stroke-[1.5] stroke-white dark:stroke-slate-800 outline-none",
-                        hoveredRegion === region.name || selectedRegions.has(region.name)
-                          ? "fill-blue-600 dark:fill-blue-500 stroke-blue-200 dark:stroke-blue-400 z-10"
-                          : "fill-slate-200 dark:fill-slate-700 hover:fill-slate-300 dark:hover:fill-slate-600"
+                        "transition-all duration-300 cursor-pointer outline-none",
+                        selectedRegions.has(region.name) || hoveredRegion === region.name
+                          ? `${REGION_COLORS[region.name]}`
+                          : "fill-white dark:fill-slate-800 stroke-slate-200 dark:stroke-slate-700"
                       )}
                       onMouseEnter={() => setHoveredRegion(region.name)}
                       onMouseLeave={() => setHoveredRegion(null)}
@@ -153,7 +209,7 @@ const UzbekistanInteractiveMap: React.FC = () => {
                   ))}
                 </g>
               </svg>
-              
+
               {/* Region Label Overlay */}
               {hoveredRegion && (
                 <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-blue-600 dark:text-blue-400 px-4 py-2 rounded-lg font-semibold border border-blue-50 dark:border-slate-700 animate-in fade-in slide-in-from-top-2 duration-300">
@@ -164,130 +220,167 @@ const UzbekistanInteractiveMap: React.FC = () => {
 
             {/* List Section */}
             <div className="lg:col-span-4 flex flex-col gap-4 h-full">
-                <div className="flex items-center justify-between mb-1">
-                  <h3 className="text-lg font-semibold flex items-center gap-2 text-slate-800 dark:text-slate-100">
-                    Viloyatlar ro'yxati
-                  </h3>
-                  {selectedRegions.size > 0 && (
-                    <button
-                      onClick={resetZoom}
-                      className="text-xs text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400 transition-colors font-medium px-2 py-1 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20"
-                    >
-                      Tozalash ({selectedRegions.size})
-                    </button>
-                  )}
-                </div>
+              <div className="flex items-center justify-between mb-1">
+                <h3 className="text-lg font-semibold flex items-center gap-2 text-slate-800 dark:text-slate-100">
+                  Viloyatlar ro'yxati
+                </h3>
                 {selectedRegions.size > 0 && (
-                  <div className="flex flex-wrap gap-1 mb-2">
-                    {Array.from(selectedRegions).map(name => (
-                      <span
-                        key={name}
-                        className="inline-flex items-center gap-1 text-xs bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-700"
-                      >
-                        {name}
-                        <button
-                          onClick={() => toggleRegion(name)}
-                          className="hover:text-red-500 dark:hover:text-red-400 transition-colors ml-0.5"
-                        >×</button>
-                      </span>
-                    ))}
-                  </div>
+                  <button
+                    onClick={resetZoom}
+                    className="text-xs text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400 transition-colors font-medium px-2 py-1 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20"
+                  >
+                    Tozalash ({selectedRegions.size})
+                  </button>
                 )}
-                <Separator className="bg-slate-200 dark:bg-slate-700 mb-2" />
-                <p className="text-xs text-slate-400 dark:text-slate-500 mb-2">Bir nechta viloyat tanlash mumkin</p>
-                <ScrollArea className="flex-1 pr-4">
-                  <div className="space-y-0.5">
-                    {MAP_DATA.regions.map((region) => {
-                      const isSelected = selectedRegions.has(region.name);
-                      const isHovered = hoveredRegion === region.name;
-                      const isExpanded = expandedRegions.has(region.name);
-                      const companies = companiesByRegion[region.name] ?? [];
-                      return (
-                        <div key={region.id}>
-                          {/* Region row */}
-                          <div
-                            className={cn(
-                              "group flex items-center gap-2 px-2 py-2 rounded-lg transition-all cursor-pointer border",
-                              isSelected
-                                ? "bg-blue-50 dark:bg-blue-900/40 border-blue-200 dark:border-blue-700 text-blue-700 dark:text-blue-300"
-                                : isHovered
+              </div>
+              {selectedRegions.size > 0 && (
+                <div className="flex flex-wrap gap-1 mb-2">
+                  {Array.from(selectedRegions).map(name => (
+                    <span
+                      key={name}
+                      className="inline-flex items-center gap-1 text-xs bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-700"
+                    >
+                      {name}
+                      <button
+                        onClick={() => {
+                          const regionId = MAP_DATA.regions.find(r => r.name === name)?.id;
+                          if (regionId) toggleRegion(regionId, name);
+                        }}
+                        className="hover:text-red-500 dark:hover:text-red-400 transition-colors ml-0.5"
+                      >×</button>
+                    </span>
+                  ))}
+                </div>
+              )}
+              <Separator className="bg-slate-200 dark:bg-slate-700 mb-2" />
+              <p className="text-xs text-slate-400 dark:text-slate-500 mb-2">Bir nechta viloyat tanlash mumkin</p>
+              <ScrollArea className="flex-1 pr-4">
+                <div className="space-y-0.5">
+                  {MAP_DATA.regions.map((region) => {
+                    const isSelected = selectedRegions.has(region.name);
+                    const isHovered = hoveredRegion === region.name;
+                    const isExpanded = expandedRegions.has(region.name);
+                    const companies = companiesByRegion[region.name] ?? [];
+                    return (
+                      <div key={region.id}>
+                        {/* Region row */}
+                        <div
+                          className={cn(
+                            "group flex items-center gap-2 px-2 py-2 rounded-lg transition-all cursor-pointer border",
+                            isSelected
+                              ? "bg-blue-50 dark:bg-blue-900/40 border-blue-200 dark:border-blue-700 text-blue-700 dark:text-blue-300"
+                              : isHovered
                                 ? "bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200"
                                 : "border-transparent hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300"
-                            )}
-                            onClick={() => toggleRegion(region.name)}
-                            onMouseEnter={() => setHoveredRegion(region.name)}
-                            onMouseLeave={() => setHoveredRegion(null)}
-                          >
-                            {/* Expand arrow */}
-                            {companies.length > 0 ? (
-                              <button
-                                onClick={(e) => toggleExpand(region.name, e)}
-                                className={cn(
-                                  "flex-shrink-0 w-5 h-5 flex items-center justify-center rounded transition-all hover:bg-blue-100 dark:hover:bg-blue-800/50",
-                                  isExpanded ? "text-blue-500" : "text-slate-400 dark:text-slate-500"
-                                )}
-                              >
-                                <svg
-                                  width="12" height="12" viewBox="0 0 12 12" fill="none"
-                                  className={cn("transition-transform duration-200", isExpanded ? "rotate-90" : "rotate-0")}
-                                >
-                                  <path d="M4 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                                </svg>
-                              </button>
-                            ) : (
-                              <span className="flex-shrink-0 w-5 h-5" />
-                            )}
-                            {/* Checkbox */}
-                            <span className={cn(
-                              "flex-shrink-0 w-4 h-4 rounded border-2 flex items-center justify-center transition-all",
-                              isSelected
-                                ? "bg-blue-600 dark:bg-blue-500 border-blue-600 dark:border-blue-500"
-                                : "border-slate-300 dark:border-slate-600 group-hover:border-blue-400 dark:group-hover:border-blue-500"
-                            )}>
-                              {isSelected && (
-                                <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
-                                  <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                </svg>
+                          )}
+                          onClick={() => toggleRegion(region.id, region.name)}
+                          onMouseEnter={() => setHoveredRegion(region.name)}
+                          onMouseLeave={() => setHoveredRegion(null)}
+                        >
+                          {/* Expand arrow */}
+                          {companies.length > 0 ? (
+                            <button
+                              onClick={(e) => toggleExpand(region.name, e)}
+                              className={cn(
+                                "shrink-0 w-5 h-5 flex items-center justify-center rounded transition-all hover:bg-blue-100 dark:hover:bg-blue-800/50",
+                                isExpanded ? "text-blue-500" : "text-slate-400 dark:text-slate-500"
                               )}
-                            </span>
-                            <span className="font-medium text-sm flex-1">{region.name}</span>
-                            {companies.length > 0 && (
-                              <span className={cn(
-                                "text-xs px-1.5 py-0.5 rounded-full font-medium transition-colors",
-                                isSelected
-                                  ? "bg-blue-200 dark:bg-blue-800 text-blue-700 dark:text-blue-200"
-                                  : "bg-slate-200 dark:bg-slate-600 text-slate-500 dark:text-slate-300"
-                              )}>
-                                {companies.length}
-                              </span>
+                            >
+                              <svg
+                                width="12" height="12" viewBox="0 0 12 12" fill="none"
+                                className={cn("transition-transform duration-200", isExpanded ? "rotate-90" : "rotate-0")}
+                              >
+                                <path d="M4 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            </button>
+                          ) : (
+                            <span className="shrink-0 w-5 h-5" />
+                          )}
+                          {/* Checkbox */}
+                          <span className={cn(
+                            "shrink-0 w-4 h-4 rounded border-2 flex items-center justify-center transition-all",
+                            isSelected
+                              ? "bg-blue-600 dark:bg-blue-500 border-blue-600 dark:border-blue-500"
+                              : "border-slate-300 dark:border-slate-600 group-hover:border-blue-400 dark:group-hover:border-blue-500"
+                          )}>
+                            {isSelected && (
+                              <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                                <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
                             )}
-                          </div>
-
-                          {/* Companies sub-list */}
-                          {isExpanded && companies.length > 0 && (
-                            <div className="ml-7 mt-0.5 mb-1 space-y-0.5 border-l-2 border-blue-100 dark:border-blue-900 pl-3">
-                              {companies.map((company, idx) => (
-                                <div
-                                  key={idx}
-                                  className="flex items-center gap-2 px-2 py-1.5 rounded-md text-xs text-slate-500 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-default"
-                                >
-                                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className="flex-shrink-0 text-slate-400 dark:text-slate-500">
-                                    <path d="M3 21h18M9 21V7l7-4v18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                                    <path d="M9 7H3v14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                                  </svg>
-                                  <span>{company}</span>
-                                </div>
-                              ))}
-                            </div>
+                          </span>
+                          <span className="font-medium text-sm flex-1">{region.name}</span>
+                          {companies.length > 0 && (
+                            <span className={cn(
+                              "text-xs px-1.5 py-0.5 rounded-full font-medium transition-colors",
+                              isSelected
+                                ? "bg-blue-200 dark:bg-blue-800 text-blue-700 dark:text-blue-200"
+                                : "bg-slate-200 dark:bg-slate-600 text-slate-500 dark:text-slate-300"
+                            )}>
+                              {companies.length}
+                            </span>
                           )}
                         </div>
-                      );
-                    })}
-                  </div>
-                </ScrollArea>
-              </div>
+
+                        {/* Companies sub-list */}
+                        {isExpanded && companies.length > 0 && (
+                          <div className="ml-7 mt-0.5 mb-1 space-y-0.5 border-l-2 border-blue-100 dark:border-blue-900 pl-3">
+                            {companies.map((company, idx) => {
+                              const isCompanySelected = selectedCompanies.has(company);
+                              return (
+                                <div
+                                  key={idx}
+                                  onClick={(e) => toggleCompany(company, e)}
+                                  className={cn(
+                                    "flex items-center gap-2 px-2 py-1.5 rounded-md text-xs transition-colors cursor-pointer",
+                                    isCompanySelected
+                                      ? "bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-medium"
+                                      : "text-slate-500 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400"
+                                  )}
+                                >
+                                  <span className={cn(
+                                    "shrink-0 w-3.5 h-3.5 rounded-sm border flex items-center justify-center transition-all",
+                                    isCompanySelected
+                                      ? "bg-blue-600 dark:bg-blue-500 border-blue-600 dark:border-blue-500"
+                                      : "border-slate-300 dark:border-slate-600"
+                                  )}>
+                                    {isCompanySelected && (
+                                      <svg width="8" height="8" viewBox="0 0 12 12" fill="none">
+                                        <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                      </svg>
+                                    )}
+                                  </span>
+                                  <span>{company}</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </ScrollArea>
             </div>
+          </div>
         </CardContent>
+        <div className="flex justify-center">
+          <div className="grid grid-cols-4 gap-y-2 gap-x-40 dark:bg-slate-800/50 w-full max-w-5xl">
+            {Region_colors.map((region, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-2 group cursor-pointer"
+              >
+                <svg className={cn("w-3.5 h-3.5 shrink-0 rounded-px", region.color)} viewBox="0 0 10 10">
+                  <rect width="10" height="10" rx="2" />
+                </svg>
+                <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                  {region.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
       </Card>
     </div>
   );
