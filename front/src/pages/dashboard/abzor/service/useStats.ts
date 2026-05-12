@@ -5,6 +5,6 @@ import { useQuery } from "@tanstack/react-query"
 export const useStat = () => {
     return useQuery({
         queryKey: ["stats"],
-        queryFn: () => token.get<IDashboard[]>("/users/stats").then((res) => res.data),
+        queryFn: () => token.get<IDashboard[]>("/users/stats").then((res) => Array.isArray(res.data) ? res.data : []),
     })
 }
