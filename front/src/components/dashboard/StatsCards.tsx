@@ -1,3 +1,4 @@
+import React from 'react';
 import { useStat } from '@/pages/dashboard/abzor/service/useStats';
 import { DollarSign, Wallet, Users, Activity, Loader2 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
@@ -28,6 +29,7 @@ const StatsCards: React.FC<StatsCardsProps> = ({
   gridCols = 4
 }) => {
   const { data: internalData, isLoading: internalLoading } = useStat();
+  
 
   const loading = externalLoading !== undefined ? externalLoading : (internalLoading && !stats);
 
@@ -39,12 +41,20 @@ const StatsCards: React.FC<StatsCardsProps> = ({
     );
   }
 
-  const displayData = stats || internalData?.map(stat => ({
-    title: stat.name,
-    value: stat.value,
-    trend: stat.desc,
-    icon: iconMap[stat.name] || Activity
-  })) || [];
+  const rawData = stats ?? (Array.isArray(internalData) ? internalData : undefined);
+
+  const displayData: StatItem[] = Array.isArray(rawData)
+    ? rawData.map((stat) => {
+        if ('title' in stat) return stat as StatItem;
+        const s = stat as { name: string; value: string; desc: string };
+        return {
+          title: s.name,
+          value: s.value,
+          trend: s.desc,
+          icon: iconMap[s.name] || Activity,
+        };
+      })
+    : [];
 
   const gridConfig = {
     1: 'lg:grid-cols-1',
