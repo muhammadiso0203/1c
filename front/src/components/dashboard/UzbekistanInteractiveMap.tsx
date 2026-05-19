@@ -6,20 +6,20 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
 const REGION_COLORS: Record<string, string> = {
-  "Қорақалпоғистон": "fill-red-400 dark:fill-red-600",
-  "Хоразм": "fill-orange-400 dark:fill-orange-600",
-  "Навоий": "fill-amber-400 dark:fill-amber-600",
-  "Бухоро": "fill-yellow-400 dark:fill-yellow-600",
-  "Қашқадарё": "fill-lime-400 dark:fill-lime-600",
-  "Сурхондарё": "fill-green-400 dark:fill-green-600",
-  "Самарқанд": "fill-emerald-400 dark:fill-emerald-600",
-  "Жиззах": "fill-teal-400 dark:fill-teal-600",
-  "Сирдарё": "fill-cyan-400 dark:fill-cyan-600",
-  "Тошкент вил.": "fill-sky-400 dark:fill-sky-600",
-  "Тошкент шаҳри": "fill-blue-400 dark:fill-blue-600",
-  "Наманган": "fill-indigo-400 dark:fill-indigo-600",
-  "Андижон": "fill-violet-400 dark:fill-violet-600",
-  "Фарғона": "fill-purple-400 dark:fill-purple-600",
+  "Қорақалпоғистон": "fill-red-500 dark:fill-red-400",
+  "Хоразм": "fill-cyan-500 dark:fill-cyan-400",
+  "Навоий": "fill-violet-500 dark:fill-violet-400",
+  "Бухоро": "fill-amber-500 dark:fill-amber-400",
+  "Қашқадарё": "fill-emerald-500 dark:fill-emerald-400",
+  "Сурхондарё": "fill-pink-500 dark:fill-pink-400",
+  "Самарқанд": "fill-blue-500 dark:fill-blue-400",
+  "Жиззах": "fill-orange-500 dark:fill-orange-400",
+  "Сирдарё": "fill-rose-500 dark:fill-rose-400",
+  "Тошкент вил.": "fill-lime-500 dark:fill-lime-400",
+  "Тошкент шаҳри": "fill-purple-500 dark:fill-purple-400",
+  "Наманган": "fill-sky-500 dark:fill-sky-400",
+  "Фарғона": "fill-yellow-500 dark:fill-yellow-400",
+  "Андижон": "fill-fuchsia-500 dark:fill-fuchsia-400",
 };
 
 const ORGANIZATIONS = [
@@ -46,20 +46,20 @@ const ORGANIZATIONS = [
 
 
 const Region_colors = [
-  { name: "Қорақалпоғистон", color: "fill-red-400 dark:fill-red-600" },
-  { name: "Андижон", color: "fill-violet-400 dark:fill-violet-600" },
-  { name: "Тошкент шаҳри", color: "fill-blue-400 dark:fill-blue-600" },
-  { name: "Самарқанд", color: "fill-emerald-400 dark:fill-emerald-600" },
-  { name: "Бухоро", color: "fill-yellow-400 dark:fill-yellow-600" },
-  { name: "Фарғона", color: "fill-purple-400 dark:fill-purple-600" },
-  { name: "Наманган", color: "fill-indigo-400 dark:fill-indigo-600" },
-  { name: "Қашқадарё", color: "fill-green-400 dark:fill-green-600" },
-  { name: "Сурхондарё", color: "fill-rose-400 dark:fill-rose-600" },
-  { name: "Жиззах", color: "fill-cyan-400 dark:fill-cyan-600" },
-  { name: "Сирдарё", color: "fill-teal-400 dark:fill-teal-600" },
-  { name: "Тошкент вил.", color: "fill-lime-400 dark:fill-lime-600" },
-  { name: "Навоий", color: "fill-orange-400 dark:fill-orange-600" },
-  { name: "Хоразм", color: "fill-pink-400 dark:fill-pink-600" },
+  { name: "Қорақалпоғистон", color: "fill-red-500 dark:fill-red-400" },
+  { name: "Хоразм", color: "fill-cyan-500 dark:fill-cyan-400" },
+  { name: "Навоий", color: "fill-violet-500 dark:fill-violet-400" },
+  { name: "Бухоро", color: "fill-amber-500 dark:fill-amber-400" },
+  { name: "Қашқадарё", color: "fill-emerald-500 dark:fill-emerald-400" },
+  { name: "Сурхондарё", color: "fill-pink-500 dark:fill-pink-400" },
+  { name: "Самарқанд", color: "fill-blue-500 dark:fill-blue-400" },
+  { name: "Жиззах", color: "fill-orange-500 dark:fill-orange-400" },
+  { name: "Сирдарё", color: "fill-rose-500 dark:fill-rose-400" },
+  { name: "Тошкент вил.", color: "fill-lime-500 dark:fill-lime-400" },
+  { name: "Тошкент шаҳри", color: "fill-purple-500 dark:fill-purple-400" },
+  { name: "Наманган", color: "fill-sky-500 dark:fill-sky-400" },
+  { name: "Фарғона", color: "fill-yellow-500 dark:fill-yellow-400" },
+  { name: "Андижон", color: "fill-fuchsia-500 dark:fill-fuchsia-400" },
 ];
 
 const MAP_DATA = {
