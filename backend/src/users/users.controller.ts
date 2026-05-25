@@ -48,5 +48,12 @@ export class UsersController {
   getPolucheniyaStats() {
     return this.usersService.getPolucheniyaStats();
   }
+
+  @Get('soliqStat')
+  @ApiOperation({ summary: 'Get soliq stats' })
+  @ApiResponse({ status: 200, description: 'Return soliq stats.' })
+  getSoliqStats() {
+    return this.usersService.getSoliqStat();
+  }
 }
 

@@ -48,3 +48,11 @@ model PolucheniyaData {
   desc  String?
 }
 
+model SoliqData {
+  id    Int     @id @default(autoincrement())
+  name  String
+  value String
+  desc  String?
+}
+
+
