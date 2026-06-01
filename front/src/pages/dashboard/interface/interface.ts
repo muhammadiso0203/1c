@@ -36,3 +36,9 @@ export interface Polucheniya {
 }
 
 
+export interface ISoliqData {
+    id: number;
+    name: string;
+    value: string;
+    desc: string;
+}

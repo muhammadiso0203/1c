@@ -3,6 +3,8 @@ import { getPolucheniya } from "./service/usePolucheniya"
 import StatsCards from "@/components/dashboard/StatsCards"
 import PurchaseSaleDynamicsChart from "@/components/charts/PurchaseSaleDynamicsChart"
 import SupplierStructureChart from "@/components/charts/SupplierStructureChart"
+import AveragePricesChart from "@/components/charts/AveragePricesChart"
+import RegionConsumptionTable from "@/components/dashboard/RegionConsumptionTable"
 
 const iconMap ={
   "Закуплено за месяц": DollarSign,
@@ -29,6 +31,10 @@ const Polucheniya = () => {
     <div className="mt-6 grid grid-cols-2 gap-6">
       <PurchaseSaleDynamicsChart />
       <SupplierStructureChart />
+    </div>
+    <div className="mt-6 grid grid-cols-2 gap-6">
+      <AveragePricesChart />
+      <RegionConsumptionTable />
     </div>
     </>
   )
