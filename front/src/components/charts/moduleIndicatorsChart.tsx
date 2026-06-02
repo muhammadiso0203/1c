@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Radar,
   RadarChart,
@@ -60,23 +61,23 @@ const ModuleIndicatorsChart = () => {
       <h3 className="font-semibold text-[18px] text-gray-900 dark:text-white mb-6 transition-colors duration-300">
         Показатели модулей (средние значения)
       </h3>
-      
+
       <div className="w-full h-[320px]">
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
             <PolarGrid stroke="#e5e7eb" className="dark:stroke-slate-700" />
-            <PolarAngleAxis 
-              dataKey="subject" 
+            <PolarAngleAxis
+              dataKey="subject"
               tick={{ fill: '#6b7280', fontSize: 13 }}
             />
-            <PolarRadiusAxis 
-              angle={90} 
-              domain={[0, 100]} 
+            <PolarRadiusAxis
+              angle={90}
+              domain={[0, 100]}
               tickCount={5}
               tick={{ fill: '#9ca3af', fontSize: 12 }}
               axisLine={false}
             />
-            
+
             <Radar
               name="Производительность"
               dataKey="A"
@@ -98,13 +99,13 @@ const ModuleIndicatorsChart = () => {
               fill="#f59e0b"
               fillOpacity={0.4}
             />
-            
-            <Tooltip 
+
+            <Tooltip
               contentStyle={{ borderRadius: '10px' }}
             />
-            <Legend 
-              verticalAlign="bottom" 
-              height={1} 
+            <Legend
+              verticalAlign="bottom"
+              height={1}
               iconType="square"
               formatter={(value, entry: any) => (
                 <span style={{ color: entry.color, fontSize: '16px' }}>{value}</span>

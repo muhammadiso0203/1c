@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   BarChart,
   Bar,
@@ -8,7 +9,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import type { TooltipProps } from 'recharts';
 
 interface ChartDataItem {
   name: string;

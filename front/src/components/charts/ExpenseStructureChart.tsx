@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   PieChart,
   Pie,
@@ -72,7 +73,7 @@ const ExpenseStructureChart = () => {
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
-            <Tooltip itemStyle={{color: "black"}} />
+            <Tooltip itemStyle={{ color: "black" }} />
           </PieChart>
         </ResponsiveContainer>
       </div>

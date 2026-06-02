@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   BarChart,
   Bar,
@@ -45,7 +46,7 @@ const ErpEfficiencyChart = () => {
       <h3 className="font-bold text-lg text-gray-800 dark:text-white mb-8">
         Эффективность модулей ERP (%)
       </h3>
-      
+
       <div className="w-full h-[370px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
@@ -57,17 +58,17 @@ const ErpEfficiencyChart = () => {
               bottom: 45,
             }}
           >
-            <CartesianGrid 
-              strokeDasharray="2 2" 
+            <CartesianGrid
+              strokeDasharray="2 2"
               vertical={true}
               horizontal={true}
-              stroke="#e5e7eb" 
+              stroke="#e5e7eb"
               opacity={0.5}
               className="dark:stroke-slate-700"
             />
-            
-            <XAxis 
-              dataKey="name" 
+
+            <XAxis
+              dataKey="name"
               axisLine={{ stroke: '#e5e7eb' }}
               tickLine={{ stroke: '#e5e7eb' }}
               tick={{ fill: '#6b7280', fontSize: 16 }}
@@ -76,28 +77,28 @@ const ErpEfficiencyChart = () => {
               interval={0}
               height={60}
             />
-            
-            <YAxis 
-              domain={[85, 100]} 
+
+            <YAxis
+              domain={[85, 100]}
               ticks={[85, 89, 93, 100]}
               axisLine={{ stroke: '#e5e7eb' }}
               tickLine={{ stroke: '#e5e7eb' }}
               tick={{ fill: '#9ca3af', fontSize: 12 }}
             />
-            
-            <Tooltip 
+
+            <Tooltip
               content={<CustomTooltip />}
             />
-            
-            <Bar 
-              dataKey="value" 
-              radius={[4, 4, 0, 0]} 
+
+            <Bar
+              dataKey="value"
+              radius={[4, 4, 0, 0]}
               barSize={85}
             >
               {data.map((entry, index) => (
-                <Cell 
-                  key={`cell-${index}`} 
-                  fill={entry.color} 
+                <Cell
+                  key={`cell-${index}`}
+                  fill={entry.color}
                 />
               ))}
             </Bar>
