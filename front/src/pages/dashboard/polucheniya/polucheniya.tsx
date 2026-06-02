@@ -1,5 +1,5 @@
 import { Activity, DollarSign, TrendingUp } from "lucide-react"
-import { getPolucheniya } from "./service/usePolucheniya"
+import { useGetPolucheniya } from "./service/usePolucheniya"
 import StatsCards from "@/components/dashboard/StatsCards"
 import PurchaseSaleDynamicsChart from "@/components/charts/PurchaseSaleDynamicsChart"
 import SupplierStructureChart from "@/components/charts/SupplierStructureChart"
@@ -14,7 +14,7 @@ const iconMap ={
 }
 
 const Polucheniya = () => {
-  const { data, isLoading } = getPolucheniya()
+  const { data, isLoading } = useGetPolucheniya()
 
   const mappedStats = data?.map((item) => ({
     title: item.name,
