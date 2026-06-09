@@ -27,13 +27,11 @@ async function bootstrap() {
 
   SwaggerModule.setup('docs', app, document);
 
-  
   await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
   console.log('Swagger http://94.158.50.204:40090/docs');
   console.log('Swagger http://localhost:3000/docs');
 
   console.log('Mufavvaqiyatli ishga tushdi');
-  
 }
 
 bootstrap();

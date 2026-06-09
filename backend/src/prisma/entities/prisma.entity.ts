@@ -7,9 +7,15 @@ export class Prisma {
   @ApiProperty({ example: 'John Doe', description: 'The name of the user' })
   name: string;
 
-  @ApiProperty({ example: 'john@example.com', description: 'The email of the user' })
+  @ApiProperty({
+    example: 'john@example.com',
+    description: 'The email of the user',
+  })
   email: string;
 
-  @ApiProperty({ example: '+998901234567', description: 'The phone number of the user' })
+  @ApiProperty({
+    example: '+998901234567',
+    description: 'The phone number of the user',
+  })
   phone: string;
 }
