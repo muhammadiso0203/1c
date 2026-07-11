@@ -11,7 +11,8 @@ import StatsCards from "../../../components/dashboard/StatsCards"
 import UzbekistanInteractiveMap from "../../../components/dashboard/UzbekistanInteractiveMap"
 import { useMetrics } from "./service/useMetrics"
 
-const formatNumber = (num: number) => {
+const formatNumber = (num?: number) => {
+  if (num === undefined || num === null) return "0"
   if (num >= 1_000_000_000) return (num / 1_000_000_000).toFixed(2) + " млрд"
   if (num >= 1_000_000) return (num / 1_000_000).toFixed(2) + " млн"
   if (num >= 1_000) return (num / 1_000).toFixed(1) + " тыс"
@@ -43,30 +44,30 @@ const Abzor = () => {
   const metrics = data ? [
     {
       label: "Умумий даромад",
-      value: formatNumber(data.Totalrevenue),
-      change: data.Incomechange,
+      value: formatNumber(data?.Totalrevenue),
+      change: data?.Incomechange,
       description: "Жами тушум",
     },
     {
       label: "Соф фойда",
-      value: formatNumber(data.Netprofit),
-      change: data.Netprofitchange,
+      value: formatNumber(data?.Netprofit),
+      change: data?.Netprofitchange,
       description: "Харажатлардан сўнг",
     },
     {
       label: "Жами ходимлар",
-      value: data.Totalemployees?.toLocaleString() ?? "0",
-      change: data.Totalemployeeschange,
+      value: data?.Totalemployees?.toLocaleString() ?? "0",
+      change: data?.Totalemployeeschange,
       description: "Штатдаги ходимлар",
     },
     {
       label: "Ҳужжатлар сони",
-      value: data.NumberOfDocuments?.toLocaleString() ?? "0",
+      value: data?.NumberOfDocuments?.toLocaleString() ?? "0",
       description: "Давр uchun",
     },
     {
       label: "Тизимдаги ҳужжатлар",
-      value: data.NumberOfDocumentsInSystem?.toLocaleString() ?? "0",
+      value: data?.NumberOfDocumentsInSystem?.toLocaleString() ?? "0",
       description: "Жами ҳужжатлар",
     },
   ] : []
