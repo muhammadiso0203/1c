@@ -1,7 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 
-// ─── Yordamchi ─────────────────────────────────────────────
-const toISO = (d: Date) => d.toISOString().split("T")[0];
 
 // DD.MM.YYYY  ←  YYYY-MM-DD
 export const toApiDate = (iso: string) => {
