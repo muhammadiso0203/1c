@@ -1,4 +1,4 @@
-import { Activity, Loader2 } from "lucide-react"
+import { Activity, Loader2, TrendingUp, TrendingDown, Minus } from "lucide-react"
 import FinancialChart from "../../../components/charts/financialChart"
 import ExpenseChart from "../../../components/charts/struktursChart"
 import EfficiencyChart from "../../../components/charts/operatsionniyChart"
@@ -11,9 +11,66 @@ import StatsCards from "../../../components/dashboard/StatsCards"
 import UzbekistanInteractiveMap from "../../../components/dashboard/UzbekistanInteractiveMap"
 import { useMetrics } from "./service/useMetrics"
 
+const formatNumber = (num: number) => {
+  if (num >= 1_000_000_000) return (num / 1_000_000_000).toFixed(2) + " млрд"
+  if (num >= 1_000_000) return (num / 1_000_000).toFixed(2) + " млн"
+  if (num >= 1_000) return (num / 1_000).toFixed(1) + " тыс"
+  return num.toLocaleString()
+}
+
+const ChangeIndicator = ({ value }: { value?: number }) => {
+  if (value === undefined) return null
+  if (value > 0) return (
+    <span className="flex items-center gap-1 text-emerald-300 text-[12px]">
+      <TrendingUp className="w-3 h-3" /> +{value}%
+    </span>
+  )
+  if (value < 0) return (
+    <span className="flex items-center gap-1 text-red-300 text-[12px]">
+      <TrendingDown className="w-3 h-3" /> {value}%
+    </span>
+  )
+  return (
+    <span className="flex items-center gap-1 text-blue-200 text-[12px]">
+      <Minus className="w-3 h-3" /> Ўзгармади
+    </span>
+  )
+}
 
 const Abzor = () => {
   const { data, isLoading } = useMetrics();
+
+  const metrics = data ? [
+    {
+      label: "Умумий даромад",
+      value: formatNumber(data.Totalrevenue),
+      change: data.Incomechange,
+      description: "Жами тушум",
+    },
+    {
+      label: "Соф фойда",
+      value: formatNumber(data.Netprofit),
+      change: data.Netprofitchange,
+      description: "Харажатлардан сўнг",
+    },
+    {
+      label: "Жами ходимлар",
+      value: data.Totalemployees?.toLocaleString() ?? "0",
+      change: data.Totalemployeeschange,
+      description: "Штатдаги ходимлар",
+    },
+    {
+      label: "Ҳужжатлар сони",
+      value: data.NumberOfDocuments?.toLocaleString() ?? "0",
+      description: "Давр uchun",
+    },
+    {
+      label: "Тизимдаги ҳужжатлар",
+      value: data.NumberOfDocumentsInSystem?.toLocaleString() ?? "0",
+      description: "Жами ҳужжатлар",
+    },
+  ] : []
+
   return (
     <>
       <div className="w-full bg-blue-700 dark:bg-blue-700 rounded-[12px] p-6 text-white transition-colors duration-300">
@@ -23,18 +80,19 @@ const Abzor = () => {
           </div>
         )}
 
-        <div className="grid grid-cols-4 gap-8">
-          {data?.map((dashboard, index) => (
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+          {metrics.map((item, index) => (
             <div key={index} className="flex flex-col gap-1">
               <p className="text-blue-100 text-[14px] font-medium">
-                {dashboard.label}
+                {item.label}
               </p>
-              <h2 className="text-3xl font-semibold">
-                {dashboard.value}
+              <h2 className="text-2xl md:text-3xl font-semibold">
+                {item.value}
               </h2>
-              <p className="text-blue-100 text-[12px]">
-                {dashboard.description}
-              </p>
+              <div className="flex items-center gap-2">
+                <ChangeIndicator value={item.change} />
+                <span className="text-blue-200 text-[12px]">{item.description}</span>
+              </div>
             </div>
           ))}
         </div>
@@ -84,4 +142,4 @@ const Abzor = () => {
   )
 }
 
-export default Abzor
+export default Abzor

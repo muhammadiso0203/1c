@@ -2,6 +2,7 @@ import { useState, Suspense, useMemo } from "react";
 import { menuBar } from "../data/menuBar";
 import { Calendar, Moon, Sun, User2, ArrowLeft, ArrowRight } from "lucide-react";
 import GlobalFilter from "../components/GlobalFilter";
+import { DateRangeProvider } from "@/context/DateRangeContext";
 
 const MainLayout = () => {
     const [activeId, setActiveId] = useState(menuBar[0].id);
@@ -112,6 +113,7 @@ const MainLayout = () => {
     }, [CurrentPage]);
 
     return (
+        <DateRangeProvider>
         <div className="flex h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
             <div className={`${isSidebarOpen ? "w-[300px]" : "w-[80px]"} border-r border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col py-6 transition-all duration-300`}>
                 <div className={`px-6 mb-6 flex items-center ${isSidebarOpen ? "justify-between" : "justify-center"}`}>
@@ -240,6 +242,7 @@ const MainLayout = () => {
                 </div>
             </div>
         </div>
+        </DateRangeProvider>
     );
 };
 

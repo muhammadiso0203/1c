@@ -6,12 +6,14 @@ export interface IUsers {
 }
 
 export interface IMetrics {
-    id: number;
-    label: string;
-    value: string;
-    description?: string;
-    category?: 'primary' | 'secondary';
-    trend?: string;
+    Totalrevenue: number;
+    Incomechange: number;
+    Netprofit: number;
+    Netprofitchange: number;
+    Totalemployees: number;
+    Totalemployeeschange: number;
+    NumberOfDocuments: number;
+    NumberOfDocumentsInSystem: number;
 }
 
 export interface IDashboard {

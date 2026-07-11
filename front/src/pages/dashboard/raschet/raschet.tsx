@@ -1,41 +1,27 @@
-import { BarChart2, AlertCircle, Award, Landmark } from "lucide-react";
-import { useGetRaschet } from "./service/useRaschet";
-import StatsCards from "@/components/dashboard/StatsCards";
-import AssetsLiabilitiesComparisonChart from "@/components/charts/AssetsLiabilitiesComparisonChart";
-import IfrsNetProfitDynamicsChart from "@/components/charts/IfrsNetProfitDynamicsChart";
-import NasToIfrsAdjustmentsTable from "@/components/dashboard/NasToIfrsAdjustmentsTable";
+import React from 'react';
+import KpiCards from '../../../components/dashboard/KpiCards';
+import RasIfrsComparisonChart from '../../../components/dashboard/RasIfrsComparisonChart';
+import AutomationLevelChart from '../../../components/dashboard/AutomationLevelChart';
+import MainAdjustmentsChart from '../../../components/dashboard/MainAdjustmentsChart';
+import AdjustmentsAndStatus from '../../../components/dashboard/AdjustmentsAndStatus';
 
-const iconMap = {
-  "Активы по МСФО": Landmark,
-  "Обязательства по МСФО": AlertCircle,
-  "Капитал по МСФО": Award,
-  "Чистая прибыль (МСФО)": BarChart2,
-};
-
-const Raschet = () => {
-  const { data, isLoading } = useGetRaschet();
-
-  const mappedStats = data?.map((item) => ({
-    title: item.name,
-    value: item.value,
-    trend: item.desc || "",
-    icon: iconMap[item.name as keyof typeof iconMap] || Landmark,
-  }));
-
+const Raschet: React.FC = () => {
   return (
-    <>
-      <div className="mt-5">
-        <StatsCards stats={mappedStats} isLoading={isLoading} />
+    <div className="w-full flex flex-col pb-10">
+      <KpiCards />
+
+      <div className="w-full grid grid-cols-2 gap-6 mt-6">
+        <RasIfrsComparisonChart />
+        <AutomationLevelChart />
       </div>
-      <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <AssetsLiabilitiesComparisonChart />
-        <IfrsNetProfitDynamicsChart />
+      <div className='mt-6'>
+
+        <MainAdjustmentsChart />
+        <AdjustmentsAndStatus />
       </div>
-      <div className="mt-5">
-        <NasToIfrsAdjustmentsTable />
-      </div>
-    </>
+    </div>
   );
 };
 
-export default Raschet;
+export default Raschet;
+

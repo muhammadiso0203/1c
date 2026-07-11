@@ -15,6 +15,20 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       port: parseInt(env.VITE_PORT || '3000'),
+      proxy: {
+        '/api-1c': {
+          target: env.VITE_API_TARGET_URL || 'http://31.135.213.137:40090/RES/hs',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api-1c/, ''),
+          configure: (proxy, _options) => {
+            proxy.on('proxyReq', (proxyReq, req, _res) => {
+              if (req.method === 'POST') {
+                proxyReq.method = 'GET';
+              }
+            });
+          },
+        },
+      },
     },
   }
 })
