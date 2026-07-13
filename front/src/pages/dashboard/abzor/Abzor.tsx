@@ -1,4 +1,3 @@
-import { Activity } from "lucide-react"
 import FinancialChart from "../../../components/charts/financialChart"
 import ExpenseChart from "../../../components/charts/struktursChart"
 import EfficiencyChart from "../../../components/charts/operatsionniyChart"
@@ -96,4 +95,4 @@ const Abzor = () => {
   )
 }
 
-export default Abzor
+export default Abzor
