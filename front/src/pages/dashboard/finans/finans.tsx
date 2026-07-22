@@ -1,6 +1,5 @@
 import { DollarSign, TrendingUp, TrendingDown, ChartPie } from "lucide-react";
 import StatsCards from "../../../components/dashboard/StatsCards";
-import { useFinanceData } from "./service/useFinanceData";
 import FinanceDynamicsChart from "../../../components/charts/FinanceDynamicsChart";
 import ExpenseStructureChart from "@/components/charts/ExpenseStructureChart";
 import CashFlowWeeklyChart from "@/components/charts/CashFlowWeeklyChart";
@@ -16,19 +15,11 @@ const iconMap = {
 };
 
 const Finans = () => {
-  const { data, isLoading } = useFinanceData();
-
-  const mappedStats = data?.map((item) => ({
-    title: item.name,
-    value: item.value,
-    trend: item.desc,
-    icon: iconMap[item.name as keyof typeof iconMap] || DollarSign,
-  }));
 
   return (
     <>
       <div className="mt-5">
-        <StatsCards stats={mappedStats} isLoading={isLoading} />
+        <StatsCards/>
       </div>
       <div className="mt-8 grid grid-cols-2 gap-5">
         <FinanceDynamicsChart />

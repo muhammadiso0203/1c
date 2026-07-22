@@ -22,18 +22,18 @@ const data = [
 
 const EfficiencyChart = () => {
   return (
-    <div className="w-full bg-white dark:bg-slate-800 p-[20px] rounded-[10px] border border-gray-200 dark:border-slate-700 transition-colors duration-300">
+    <div className="w-full bg-white dark:bg-slate-800 p-5 rounded-[10px] border border-gray-200 dark:border-slate-700 transition-colors duration-300">
       <h3 className='font-semibold text-[18px] text-gray-900 dark:text-white mb-4 transition-colors duration-300'>
         Операционная эффективность
       </h3>
-      
+
       <ResponsiveContainer width="100%" height={300}>
         <ComposedChart
           data={data}
           margin={{
             top: 20,
             right: 20,
-            bottom: 20,
+            bottom: -30,
             left: 20,
           }}
         >

@@ -1,10 +1,8 @@
 import { MapPin, Calendar, X } from 'lucide-react';
-import { useState } from 'react';
 import { useDateRange, DEFAULT_FROM, DEFAULT_TO, toApiDate } from '@/context/DateRangeContext';
 
 const GlobalFilter = () => {
-    const [region, setRegion] = useState("Все области");
-    const { dateFrom, dateTo, setDateFrom, setDateTo, reset } = useDateRange();
+    const { region, setRegion, dateFrom, dateTo, setDateFrom, setDateTo, reset } = useDateRange();
 
     const isFiltered =
         region !== "Все области" ||
@@ -12,7 +10,6 @@ const GlobalFilter = () => {
         dateTo   !== DEFAULT_TO;
 
     const handleReset = () => {
-        setRegion("Все области");
         reset();
     };
 
@@ -39,6 +36,7 @@ const GlobalFilter = () => {
                         >
                             <option>Все области</option>
                             <option>Ташкентская область</option>
+                            <option>Город Ташкент</option>
                             <option>Самаркандская область</option>
                             <option>Бухарская область</option>
                             <option>Ферганская область</option>

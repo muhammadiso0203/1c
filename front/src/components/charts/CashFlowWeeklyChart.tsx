@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   BarChart,
   Bar,
@@ -8,25 +9,148 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
+import { useMetrics } from '@/pages/dashboard/abzor/service/useMetrics';
+import { useDateRange } from '@/context/DateRangeContext';
 
-const data = [
-  { name: 'Нед 1', incoming: 78, outgoing: 52 },
-  { name: 'Нед 2', incoming: 85, outgoing: 48 },
-  { name: 'Нед 3', incoming: 92, outgoing: 55 },
-  { name: 'Нед 4', incoming: 88, outgoing: 50 },
-];
+interface WeekChartItem {
+  name: string;      // Masalan: "Нед 1 (04.01)"
+  incoming: number;  // Kelib tushgan pullar (MoneyReceipts) - milliardda
+  outgoing: number;  // Chiqib ketgan pullar (MoneyPayments) - milliardda
+  dateObj: Date;     // Saralash va filtrlash uchun sana obyekti
+  index: number;     // Hafta tartib raqami
+}
 
 const CashFlowWeeklyChart = () => {
+  const { data: metrics, isLoading } = useMetrics();
+  const { dateFrom, dateTo } = useDateRange();
+
+  // Backenddan kelgan ma'lumotlarni o'qiymiz
+  const allItems: WeekChartItem[] = [];
+  if (metrics) {
+    const metricsData = metrics as Record<string, any>;
+    const itemsMap = new Map<string, Partial<WeekChartItem>>();
+
+    for (const key of Object.keys(metricsData)) {
+      // Regex: MoneyReceipts_Неделя1_04_01_2021 kabi kalitlarni qidiramiz
+      const match = key.match(/^(MoneyReceipts|MoneyPayments)_Неделя(\d+)_(\d{2})_(\d{2})_(\d{4})$/i);
+      if (!match) continue;
+
+      const type = match[1].toLowerCase();
+      const weekIndex = parseInt(match[2], 10);
+      const day = parseInt(match[3], 10);
+      const month = parseInt(match[4], 10) - 1; // 0-indexed oy
+      const year = parseInt(match[5], 10);
+      const value = Number(metricsData[key]) || 0;
+
+      // Har bir haftani noyob sana satri orqali guruhlaymiz (turli yillar to'qnashmasligi uchun)
+      const dateStr = `${day}_${month}_${year}`;
+      let item = itemsMap.get(dateStr);
+      if (!item) {
+        const dateObj = new Date(year, month, day);
+        const name = `Нед ${weekIndex} (${String(day).padStart(2, '0')}.${String(month + 1).padStart(2, '0')})`;
+        item = {
+          name,
+          dateObj,
+          index: weekIndex,
+          incoming: 0,
+          outgoing: 0,
+        };
+        itemsMap.set(dateStr, item);
+      }
+
+      if (type === 'moneyreceipts') {
+        // Qiymatni milliard so'm ko'rinishiga o'tkazamiz
+        item.incoming = value / 1_000_000_000;
+      } else if (type === 'moneypayments') {
+        // Qiymatni milliard so'm ko'rinishiga o'tkazamiz
+        item.outgoing = value / 1_000_000_000;
+      }
+    }
+
+    // Obyektlarni massivga yuklaymiz
+    for (const item of itemsMap.values()) {
+      allItems.push({
+        name: item.name || '',
+        incoming: Number((item.incoming || 0).toFixed(2)),
+        outgoing: Number((item.outgoing || 0).toFixed(2)),
+        dateObj: item.dateObj || new Date(),
+        index: item.index || 0,
+      });
+    }
+  }
+
+  // Xronologik tartibda saralaymiz
+  const sortedItems = allItems.sort((a, b) => a.dateObj.getTime() - b.dateObj.getTime());
+
+  // Tanlangan sana oralig'iga ko'ra filtrlash (vaqt zonasidan mustaqil ravishda)
+  const parseDate = (dateStr: string, defaultDate: string) => {
+    const parts = (dateStr || defaultDate).split('-');
+    const year = parseInt(parts[0], 10) || 2025;
+    const month = parseInt(parts[1], 10) || 1;
+    const day = parseInt(parts[2], 10) || 1;
+    return new Date(year, month - 1, day);
+  };
+
+  const fromDate = parseDate(dateFrom, '2025-01-01');
+  const toDate = parseDate(dateTo, '2025-12-31');
+
+  const parseYearMonth = (dateStr: string, defaultDate: string) => {
+    const parts = (dateStr || defaultDate).split('-');
+    const year = parseInt(parts[0], 10) || 2025;
+    const month = parseInt(parts[1], 10) || 1;
+    return { year, month: month - 1 };
+  };
+
+  const fromYM = parseYearMonth(dateFrom, '2025-01-01');
+  const toYM = parseYearMonth(dateTo, '2025-12-31');
+  const selectedMonthsCount = (toYM.year * 12 + toYM.month) - (fromYM.year * 12 + fromYM.month) + 1;
+
+  let filteredData = sortedItems.filter(item => {
+    const time = item.dateObj.getTime();
+    return time >= fromDate.getTime() && time <= toDate.getTime();
+  });
+
+  // Agar 12 oy yoki undan ko'p vaqt tanlansa, faqat oxirgi oydagi 4 ta haftani chiqaramiz
+  if (selectedMonthsCount >= 12) {
+    filteredData = filteredData.slice(-4);
+  }
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-100 bg-white dark:bg-slate-800 p-6 rounded-[10px] border border-gray-200 dark:border-slate-700 flex flex-col">
+        <h3 className="text-[18px] font-medium text-gray-900 dark:text-white mb-6">
+          Движение денежных средств (недельный анализ)
+        </h3>
+        <div className="flex-1 flex items-center justify-center text-gray-400">
+          Загрузка данных...
+        </div>
+      </div>
+    );
+  }
+
+  if (filteredData.length === 0) {
+    return (
+      <div className="w-full h-100 bg-white dark:bg-slate-800 p-6 rounded-[10px] border border-gray-200 dark:border-slate-700 flex flex-col">
+        <h3 className="text-[18px] font-medium text-gray-900 dark:text-white mb-6">
+          Движение денежных средств (недельный анализ)
+        </h3>
+        <div className="flex-1 flex items-center justify-center text-gray-400">
+          Нет данных за выбранный период
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full h-[400px] bg-white dark:bg-slate-800 p-6 rounded-[10px] border border-gray-200 dark:border-slate-700">
+    <div className="w-full h-100 bg-white dark:bg-slate-800 p-6 rounded-[10px] border border-gray-200 dark:border-slate-700">
       <h3 className="text-[18px] font-medium text-gray-900 dark:text-white mb-6">
-        Движение денежных средств (недельный анализ)
+        Движение денежных средств (недельный анализ, млрд сум)
       </h3>
-      <div className="w-full h-[300px]">
+      <div className="w-full h-75">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
-            data={data}
-            margin={{ top: 5, right: 10, left: -20, bottom: 0 }}
+            data={filteredData}
+            margin={{ top: 5, right: 10, left: 10, bottom: 0 }}
             barGap={2}
           >
             <CartesianGrid 
@@ -38,15 +162,16 @@ const CashFlowWeeklyChart = () => {
               dataKey="name" 
               axisLine={true} 
               tickLine={true} 
-              tick={{ fill: '#555555', fontSize: 16 }}
+              tick={{ fill: '#94a3b8', fontSize: 13 }}
               dy={10}
+              interval={0}
             />
             <YAxis 
               axisLine={true} 
               tickLine={true} 
-              tick={{ fill: '#555555', fontSize: 16 }}
-              ticks={[0, 25, 50, 75, 100]}
-              domain={[0, 100]}
+              tick={{ fill: '#94a3b8', fontSize: 13 }}
+              width={80}
+              tickFormatter={(val) => val.toLocaleString()}
             />
             <Tooltip 
               cursor={{ fill: 'transparent' }}
@@ -56,6 +181,10 @@ const CashFlowWeeklyChart = () => {
                 backgroundColor: 'rgba(255, 255, 255, 0.98)',
                 padding: '8px'
               }}
+              formatter={(value: any, name: any) => [
+                `${value.toLocaleString()} млрд sum`,
+                name === 'incoming' ? 'Поступления' : 'Выплаты'
+              ]}
             />
             <Legend 
               verticalAlign="bottom" 
@@ -73,14 +202,12 @@ const CashFlowWeeklyChart = () => {
               dataKey="incoming" 
               fill="#10b981" 
               radius={[2, 2, 0, 0]}
-              barSize={150}
             />
             <Bar 
               name="outgoing"
               dataKey="outgoing" 
               fill="#ef4444" 
               radius={[2, 2, 0, 0]}
-              barSize={150}
             />
           </BarChart>
         </ResponsiveContainer>

@@ -1,9 +1,11 @@
 import { Calculator, CheckSquare, Percent, AlertCircle } from "lucide-react";
 import { useGetByudjetirovaniya } from "./service/useByudjetirovaniya";
 import StatsCards from "@/components/dashboard/StatsCards";
-import BudgetExecutionByCategoriesChart from "@/components/charts/BudgetExecutionByCategoriesChart";
-import MonthlyBudgetExecutionDynamicsChart from "@/components/charts/MonthlyBudgetExecutionDynamicsChart";
-import LimitExceededTable from "@/components/dashboard/LimitExceededTable";
+import PlanVsFactChart from "@/components/charts/planVsFactChart";
+import BudgetStructureChart from "@/components/charts/BudgetStructureChart";
+import DepartmentBudgetExecutionChart from "@/components/charts/DepartmentBudgetExecutionChart";
+import H2ForecastChart from "@/components/charts/H2ForecastChart";
+import ApprovalRequestsList from "@/components/dashboard/ApprovalRequestsList";
 
 const iconMap = {
   "Плановый бюджет": Calculator,
@@ -23,19 +25,23 @@ const Byudjetirovaniya = () => {
   }));
 
   return (
-    <>
+    <div className="w-full space-y-6">
       <div className="mt-5">
         <StatsCards stats={mappedStats} isLoading={isLoading} />
       </div>
       <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <BudgetExecutionByCategoriesChart />
-        <MonthlyBudgetExecutionDynamicsChart />
+        <PlanVsFactChart />
+        <BudgetStructureChart />
       </div>
       <div className="mt-5">
-        <LimitExceededTable />
+        <DepartmentBudgetExecutionChart />
       </div>
-    </>
+      <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <H2ForecastChart />
+        <ApprovalRequestsList />
+      </div>
+    </div>
   );
 };
 
-export default Byudjetirovaniya;
+export default Byudjetirovaniya;
