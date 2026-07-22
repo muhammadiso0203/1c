@@ -29,7 +29,8 @@ const BudgetStructureChart = () => {
                   Персонал: '#f59e0b',
                   Резервы: '#94a3b8',
                 };
-                const textColor = colorMap[name] || '#64748b';
+                const key = name || '';
+                const textColor = colorMap[key] || '#64748b';
                 const textAnchor = x > cx ? 'start' : 'end';
                 return (
                   <text

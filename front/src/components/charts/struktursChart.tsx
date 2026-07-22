@@ -96,8 +96,8 @@ const SimpleChart = () => {
               cx="50%"
               cy="50%"
               outerRadius={85}
-              label={({ payload, percentage, value }) =>
-                total > 0 && value > 0 ? `${payload.shortName}: ${percentage}%` : ''
+              label={({ payload, value }: any) =>
+                total > 0 && value > 0 ? `${payload.shortName}: ${payload.percentage}%` : ''
               }
             >
               {displaySlices.map((entry, index) => (

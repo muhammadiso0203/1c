@@ -1,4 +1,3 @@
-import { DollarSign, TrendingUp, TrendingDown, ChartPie } from "lucide-react";
 import StatsCards from "../../../components/dashboard/StatsCards";
 import FinanceDynamicsChart from "../../../components/charts/FinanceDynamicsChart";
 import ExpenseStructureChart from "@/components/charts/ExpenseStructureChart";
@@ -6,13 +5,6 @@ import CashFlowWeeklyChart from "@/components/charts/CashFlowWeeklyChart";
 import KeyFinanceIndicators from "@/components/dashboard/KeyFinanceIndicators";
 import FinancialGoals from "@/components/dashboard/FinancialGoals";
 import FinancialForecast from "@/components/dashboard/FinancialForecast";
-
-const iconMap = {
-  "Общая выручка": DollarSign,
-  "Чистая прибыль": TrendingUp,
-  "Операционные расходы": TrendingDown,
-  "Рентабельность": ChartPie,
-};
 
 const Finans = () => {
 
