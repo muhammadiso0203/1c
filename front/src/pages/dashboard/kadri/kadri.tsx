@@ -1,59 +1,90 @@
-import { Users, UserPlus, UserMinus, Percent } from "lucide-react";
-import { useMetrics } from "@/pages/dashboard/abzor/service/useMetrics";
+import { Users, UserPlus, UserMinus, Briefcase } from "lucide-react";
+import { useKadr } from "@/pages/dashboard/kadri/service/useKadr";
 import StatsCards from "@/components/dashboard/StatsCards";
-import StaffCountDynamicsChart from "@/components/charts/StaffCountDynamicsChart";
-import StaffAgeCompositionChart from "@/components/charts/StaffAgeCompositionChart";
-import NewHiresTable from "@/components/dashboard/NewHiresTable";
+import PersonnelMovementChart from "@/components/charts/PersonnelMovementChart";
+import GenderDistributionChart from "@/components/charts/GenderDistributionChart";
+import EducationLevelChart from "@/components/charts/EducationLevelChart";
+import AgeDistributionVerticalChart from "@/components/charts/AgeDistributionVerticalChart";
+import TenureSeniorityChart from "@/components/charts/TenureSeniorityChart";
+import DepartmentSickLeavesChart from "@/components/charts/DepartmentSickLeavesChart";
+import DepartmentVacationsChart from "@/components/charts/DepartmentVacationsChart";
+import EmployeeProfilesList from "@/components/dashboard/EmployeeProfilesList";
+import WorkSchedulesTable from "@/components/dashboard/WorkSchedulesTable";
 
 const Kadri = () => {
-  const { data, isLoading } = useMetrics();
+  const { data, isLoading } = useKadr();
 
+  const totalEmployees = data?.Totalemployees || 1247;
+  const totalEmployeesChange = data?.Totalemployeeschange || 23;
+  const hiringEmployees = data?.HiringEmployees || 28;
+  const hiringEmployeesChange = data?.ChangesInHiring || 12;
+  const dismissalEmployees = data?.DismissalOfEmployees || 8;
+  const dismissalEmployeesChange = data?.ChangesInDismissal || -40;
+  
   const employeeStats = [
     {
       title: "Всего сотрудников",
-      value: data ? `${data?.Totalemployees?.toLocaleString() ?? "0"} чел.` : "",
-      trend: data?.Totalemployeeschange != null
-        ? (data.Totalemployeeschange > 0 
-            ? `+${data.Totalemployeeschange}% по сравнению с прошлым периодом` 
-            : data.Totalemployeeschange < 0 
-              ? `${data.Totalemployeeschange}% по сравнению с прошлым периодом` 
-              : 'Ўзгармади')
-        : "",
+      value: `${totalEmployees.toLocaleString()} чел.`,
+      trend: `+${totalEmployeesChange} за месяц`,
       icon: Users,
     },
     {
       title: "Принято за месяц",
-      value: "45 чел.",
-      trend: "+15% к прошлому мес.",
+      value: `${hiringEmployees.toLocaleString()} чел.`,
+      trend: `+${hiringEmployeesChange}% к прошлому месяцу`,
       icon: UserPlus,
     },
     {
       title: "Уволено за месяц",
-      value: "12 чел.",
-      trend: "В пределах текучести",
+      value: `${dismissalEmployees.toLocaleString()} чел.`,
+      trend: `${dismissalEmployeesChange}% к прошлому месяцу`,
       icon: UserMinus,
     },
     {
       title: "Открытых вакансий",
-      value: "1.8%",
-      trend: "Ниже целевого (2.5%)",
-      icon: Percent,
+      value: "17",
+      trend: "В активном поиске",
+      icon: Briefcase,
     },
   ];
 
   return (
-    <>
-      <div className="mt-5">
+    <div className="space-y-6">
+      <div>
         <StatsCards stats={employeeStats} isLoading={isLoading} />
       </div>
-      <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <StaffCountDynamicsChart />
-        <StaffAgeCompositionChart />
+
+      {/* Row 1 */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <PersonnelMovementChart />
+        <GenderDistributionChart />
       </div>
-      <div className="mt-5">
-        <NewHiresTable />
+
+      {/* Row 2 */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <EducationLevelChart />
+        <AgeDistributionVerticalChart />
       </div>
-    </>
+
+      {/* Row 3 */}
+      <div>
+        <TenureSeniorityChart />
+      </div>
+
+      {/* Row 4 */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <DepartmentSickLeavesChart />
+        <DepartmentVacationsChart />
+      </div>
+
+      {/* Row 5 */}
+      <div className="grid grid-cols-2">
+        <EmployeeProfilesList />
+      </div>
+      <div>
+        <WorkSchedulesTable />
+      </div>
+    </div>
   );
 };
 

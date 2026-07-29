@@ -9,8 +9,8 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import { useMetrics } from '@/pages/dashboard/abzor/service/useMetrics';
 import { useDateRange } from '@/context/DateRangeContext';
+import { useFinans } from '@/pages/dashboard/finans/service/useFinans';
 
 interface WeekChartItem {
   name: string;      // Masalan: "Нед 1 (04.01)"
@@ -21,8 +21,17 @@ interface WeekChartItem {
 }
 
 const CashFlowWeeklyChart = () => {
-  const { data: metrics, isLoading } = useMetrics();
+  const { data: metrics, isLoading } = useFinans();
   const { dateFrom, dateTo } = useDateRange();
+
+  // Latin1 (ISO-8859-1) dan UTF-8 ga o'tkazish funksiyasi (kirill harflarini to'g'ri o'qish uchun)
+  const fixEncoding = (str: string): string => {
+    try {
+      return decodeURIComponent(escape(str));
+    } catch {
+      return str;
+    }
+  };
 
   // Backenddan kelgan ma'lumotlarni o'qiymiz
   const allItems: WeekChartItem[] = [];
@@ -30,9 +39,12 @@ const CashFlowWeeklyChart = () => {
     const metricsData = metrics as Record<string, any>;
     const itemsMap = new Map<string, Partial<WeekChartItem>>();
 
-    for (const key of Object.keys(metricsData)) {
+    for (const rawKey of Object.keys(metricsData)) {
+      const key = fixEncoding(rawKey);
+      const value = Number(metricsData[rawKey]) || 0;
+
       // Regex: MoneyReceipts_Неделя1_04_01_2021 kabi kalitlarni qidiramiz
-      const match = key.match(/^(MoneyReceipts|MoneyPayments)_Неделя(\d+)_(\d{2})_(\d{2})_(\d{4})$/i);
+      const match = key.match(/^(MoneyReceipts|MoneyPayments)_[^_]+?(\d+)_(\d{2})_(\d{2})_(\d{4})$/i);
       if (!match) continue;
 
       const type = match[1].toLowerCase();
@@ -40,7 +52,6 @@ const CashFlowWeeklyChart = () => {
       const day = parseInt(match[3], 10);
       const month = parseInt(match[4], 10) - 1; // 0-indexed oy
       const year = parseInt(match[5], 10);
-      const value = Number(metricsData[key]) || 0;
 
       // Har bir haftani noyob sana satri orqali guruhlaymiz (turli yillar to'qnashmasligi uchun)
       const dateStr = `${day}_${month}_${year}`;
@@ -94,24 +105,13 @@ const CashFlowWeeklyChart = () => {
   const fromDate = parseDate(dateFrom, '2025-01-01');
   const toDate = parseDate(dateTo, '2025-12-31');
 
-  const parseYearMonth = (dateStr: string, defaultDate: string) => {
-    const parts = (dateStr || defaultDate).split('-');
-    const year = parseInt(parts[0], 10) || 2025;
-    const month = parseInt(parts[1], 10) || 1;
-    return { year, month: month - 1 };
-  };
-
-  const fromYM = parseYearMonth(dateFrom, '2025-01-01');
-  const toYM = parseYearMonth(dateTo, '2025-12-31');
-  const selectedMonthsCount = (toYM.year * 12 + toYM.month) - (fromYM.year * 12 + fromYM.month) + 1;
-
   let filteredData = sortedItems.filter(item => {
     const time = item.dateObj.getTime();
     return time >= fromDate.getTime() && time <= toDate.getTime();
   });
 
-  // Agar 12 oy yoki undan ko'p vaqt tanlansa, faqat oxirgi oydagi 4 ta haftani chiqaramiz
-  if (selectedMonthsCount >= 12) {
+  // Agar ma'lumotlar ko'p bo'lsa (4 tadan oshsa), faqat oxirgi 4 haftalikni ko'rsatamiz
+  if (filteredData.length > 4) {
     filteredData = filteredData.slice(-4);
   }
 
@@ -153,30 +153,30 @@ const CashFlowWeeklyChart = () => {
             margin={{ top: 5, right: 10, left: 10, bottom: 0 }}
             barGap={2}
           >
-            <CartesianGrid 
-              strokeDasharray="3 3" 
-              vertical={true} 
-              stroke="#e2e8f0" 
+            <CartesianGrid
+              strokeDasharray="3 3"
+              vertical={true}
+              stroke="#e2e8f0"
             />
-            <XAxis 
-              dataKey="name" 
-              axisLine={true} 
-              tickLine={true} 
+            <XAxis
+              dataKey="name"
+              axisLine={true}
+              tickLine={true}
               tick={{ fill: '#94a3b8', fontSize: 13 }}
               dy={10}
               interval={0}
             />
-            <YAxis 
-              axisLine={true} 
-              tickLine={true} 
+            <YAxis
+              axisLine={true}
+              tickLine={true}
               tick={{ fill: '#94a3b8', fontSize: 13 }}
               width={80}
               tickFormatter={(val) => val.toLocaleString()}
             />
-            <Tooltip 
+            <Tooltip
               cursor={{ fill: 'transparent' }}
-              contentStyle={{ 
-                borderRadius: '6px', 
+              contentStyle={{
+                borderRadius: '6px',
                 border: '1px solid #d1d5db',
                 backgroundColor: 'rgba(255, 255, 255, 0.98)',
                 padding: '8px'
@@ -186,8 +186,8 @@ const CashFlowWeeklyChart = () => {
                 name === 'incoming' ? 'Поступления' : 'Выплаты'
               ]}
             />
-            <Legend 
-              verticalAlign="bottom" 
+            <Legend
+              verticalAlign="bottom"
               align="center"
               iconType="square"
               iconSize={12}
@@ -197,16 +197,16 @@ const CashFlowWeeklyChart = () => {
                 </span>
               )}
             />
-            <Bar 
+            <Bar
               name="incoming"
-              dataKey="incoming" 
-              fill="#10b981" 
+              dataKey="incoming"
+              fill="#10b981"
               radius={[2, 2, 0, 0]}
             />
-            <Bar 
+            <Bar
               name="outgoing"
-              dataKey="outgoing" 
-              fill="#ef4444" 
+              dataKey="outgoing"
+              fill="#ef4444"
               radius={[2, 2, 0, 0]}
             />
           </BarChart>

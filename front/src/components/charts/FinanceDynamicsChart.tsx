@@ -9,8 +9,8 @@ import {
   ResponsiveContainer,
   Legend
 } from 'recharts';
-import { useMetrics } from '@/pages/dashboard/abzor/service/useMetrics';
 import { useDateRange } from '@/context/DateRangeContext';
+import { useFinans } from '@/pages/dashboard/finans/service/useFinans';
 
 // Russian month short names
 const RussianMonthShort: Record<string, string> = {
@@ -82,8 +82,17 @@ const CustomLegend = (props: any) => {
 };
 
 const FinanceDynamicsChart = () => {
-  const { data: metrics, isLoading } = useMetrics();
+  const { data: metrics, isLoading } = useFinans();
   const { dateFrom, dateTo } = useDateRange();
+
+  // Latin1 (ISO-8859-1) dan UTF-8 ga o'tkazish funksiyasi (kirill harflarini to'g'ri o'qish uchun)
+  const fixEncoding = (str: string): string => {
+    try {
+      return decodeURIComponent(escape(str));
+    } catch {
+      return str;
+    }
+  };
 
   // Parsing metrics data
   const allItems: ChartItem[] = [];
@@ -91,7 +100,8 @@ const FinanceDynamicsChart = () => {
     const metricsData = metrics as Record<string, any>;
     const itemsMap = new Map<number, Partial<ChartItem>>();
 
-    for (const key of Object.keys(metricsData)) {
+    for (const rawKey of Object.keys(metricsData)) {
+      const key = fixEncoding(rawKey);
       const match = key.match(/^(Revenue|Expenses|Expense)[_\s](\d+)[_\s]([^\s_]+)[_\s](\d{4})$/i);
       if (!match) continue;
 
@@ -99,7 +109,7 @@ const FinanceDynamicsChart = () => {
       const index = parseInt(match[2], 10);
       const rawMonth = match[3].toLowerCase();
       const year = parseInt(match[4], 10);
-      const value = Number(metricsData[key]) || 0;
+      const value = Number(metricsData[rawKey]) || 0;
 
       let item = itemsMap.get(index);
       if (!item) {
