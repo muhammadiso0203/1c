@@ -58,13 +58,13 @@ const MainLayout = () => {
         },
         {
             id: "9",
-            title: "Казначейство",
-            desc: "Управление ликвидностью, расчетными счетами и платежным календарем"
+            title: "Реорганизация и автоматизация казначейства",
+            desc: "Управление денежными потоками и ликвидностью"
         },
         {
             id: "10",
-            title: "Планирование денежных средств",
-            desc: "Прогнозирование денежных потоков (Cash Flow) и отчетность"
+            title: "Планирование и контроль денежных средств",
+            desc: "Прогнозирование и управление денежными потоками"
         },
         {
             id: "11",
@@ -115,7 +115,7 @@ const MainLayout = () => {
     return (
         <DateRangeProvider>
             <div className="flex h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
-                <div className={`${isSidebarOpen ? "w-[300px]" : "w-[80px]"} border-r border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col py-6 transition-all duration-300`}>
+                <div className={`${isSidebarOpen ? "w-75" : "w-20"} border-r border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col py-6 transition-all duration-300`}>
                     <div className={`px-6 mb-6 flex items-center ${isSidebarOpen ? "justify-between" : "justify-center"}`}>
                         {isSidebarOpen && (
                             <div className="overflow-hidden">
@@ -223,7 +223,7 @@ const MainLayout = () => {
                                 {/* Page Content */}
                                 <div className="min-h-0">
                                     <Suspense fallback={
-                                        <div className="flex h-[400px] w-full items-center justify-center">
+                                        <div className="flex h-100 w-full items-center justify-center">
                                             <div className="flex flex-col items-center gap-3">
                                                 <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                                                 <p className="text-gray-500 dark:text-gray-400 font-medium">Yuklanmoqda...</p>

@@ -1,3 +1,4 @@
+import React, { useMemo } from 'react';
 import {
   BarChart,
   Bar,
@@ -7,8 +8,9 @@ import {
   Tooltip,
   ResponsiveContainer
 } from 'recharts';
+import { useMainpage } from '@/pages/dashboard/abzor/service/useMainpage';
 
-const data = [
+const defaultData = [
   { name: 'Производство', days: 260 },
   { name: 'Логистика', days: 150 },
   { name: 'Продажи', days: 140 },
@@ -18,16 +20,88 @@ const data = [
 ];
 
 const DepartmentVacationsChart = () => {
+  const { data: mainpageData, isLoading } = useMainpage();
+
+  const chartData = useMemo(() => {
+    if (!mainpageData) return defaultData;
+
+    const results: { name: string; days: number }[] = [];
+
+    const search = (currentObj: any) => {
+      if (!currentObj || typeof currentObj !== 'object') return;
+
+      for (const key in currentObj) {
+        if (key.startsWith('ОтпускныеПоПодразделениям_в35___')) {
+          const value = Number(currentObj[key]) || 0;
+          
+          // Clear name: remove "ОтпускныеПоПодразделениям_в35___"
+          const cleanName = key
+            .replace('ОтпускныеПоПодразделениям_в35___', '')
+            .replace(/_/g, ' ')
+            .trim()
+            .replace(/\s+/g, ' ');
+
+          results.push({ name: cleanName, days: value });
+        } else if (currentObj[key] && typeof currentObj[key] === 'object') {
+          search(currentObj[key]);
+        }
+      }
+    };
+
+    search(mainpageData);
+
+    if (results.length === 0) return defaultData;
+
+    // Sort by days descending
+    return results.sort((a, b) => b.days - a.days);
+  }, [mainpageData]);
+
+  // Adjust height dynamically based on the number of items
+  const isDynamic = chartData !== defaultData;
+  const containerHeight = isDynamic ? Math.max(400, chartData.length * 35 + 80) : 400;
+  const chartHeight = isDynamic ? Math.max(300, chartData.length * 35) : 300;
+
+  // Find max value for ticks
+  const maxDays = useMemo(() => {
+    if (chartData.length === 0) return 280;
+    const maxVal = Math.max(...chartData.map(d => d.days));
+    return maxVal > 0 ? maxVal : 280;
+  }, [chartData]);
+
+  // Create nice ticks up to maxDays
+  const ticks = useMemo(() => {
+    const roundedMax = Math.ceil(maxDays / 40) * 40;
+    const step = roundedMax / 4;
+    return [0, step, step * 2, step * 3, roundedMax];
+  }, [maxDays]);
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-[400px] bg-white dark:bg-slate-800 p-6 rounded-[12px] border border-gray-200 dark:border-slate-700 animate-pulse flex flex-col justify-between transition-colors duration-300">
+        <div className="h-6 w-64 bg-gray-200 dark:bg-slate-700 rounded mb-6"></div>
+        <div className="flex-1 space-y-4">
+          <div className="h-8 bg-gray-200 dark:bg-slate-700 rounded w-full"></div>
+          <div className="h-8 bg-gray-200 dark:bg-slate-700 rounded w-[80%]"></div>
+          <div className="h-8 bg-gray-200 dark:bg-slate-700 rounded w-[60%]"></div>
+          <div className="h-8 bg-gray-200 dark:bg-slate-700 rounded w-[40%]"></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full h-[400px] bg-white dark:bg-slate-800 p-6 rounded-[12px] border border-gray-200 dark:border-slate-700">
+    <div 
+      className="w-full bg-white dark:bg-slate-800 p-6 rounded-[12px] border border-gray-200 dark:border-slate-700 transition-colors duration-300"
+      style={{ height: containerHeight }}
+    >
       <h3 className="text-[18px] font-semibold text-gray-900 dark:text-white mb-6">
         Отпуска по подразделениям (дни)
       </h3>
-      <div className="w-full h-[300px]">
+      <div className="w-full" style={{ height: chartHeight }}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             layout="vertical"
-            data={data}
+            data={chartData}
             margin={{ top: 10, right: 20, left: 10, bottom: 0 }}
           >
             <CartesianGrid
@@ -41,15 +115,15 @@ const DepartmentVacationsChart = () => {
               type="number"
               tickLine={true}
               tick={{ fill: '#64748b', fontSize: 13 }}
-              domain={[0, 280]}
-              ticks={[0, 70, 140, 210, 280]}
+              domain={[0, ticks[4]]}
+              ticks={ticks}
             />
             <YAxis
               type="category"
               dataKey="name"
               tickLine={true}
-              tick={{ fill: '#64748b', fontSize: 13 }}
-              width={100}
+              tick={{ fill: '#64748b', fontSize: 12 }}
+              width={150}
             />
             <Tooltip
               contentStyle={{
@@ -61,7 +135,7 @@ const DepartmentVacationsChart = () => {
               }}
               formatter={(value) => [`${value} дн.`, 'Количество дней']}
             />
-            <Bar dataKey="days" fill="#3b82f6" radius={[0, 3, 3, 0]} barSize={35} />
+            <Bar dataKey="days" fill="#3b82f6" radius={[0, 3, 3, 0]} barSize={20} />
           </BarChart>
         </ResponsiveContainer>
       </div>
