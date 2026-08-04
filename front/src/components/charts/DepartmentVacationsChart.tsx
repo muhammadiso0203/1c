@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import {
   BarChart,
   Bar,
@@ -77,7 +77,7 @@ const DepartmentVacationsChart = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full h-[400px] bg-white dark:bg-slate-800 p-6 rounded-[12px] border border-gray-200 dark:border-slate-700 animate-pulse flex flex-col justify-between transition-colors duration-300">
+      <div className="w-full h-100 bg-white dark:bg-slate-800 p-6 rounded-[12px] border border-gray-200 dark:border-slate-700 animate-pulse flex flex-col justify-between transition-colors duration-300">
         <div className="h-6 w-64 bg-gray-200 dark:bg-slate-700 rounded mb-6"></div>
         <div className="flex-1 space-y-4">
           <div className="h-8 bg-gray-200 dark:bg-slate-700 rounded w-full"></div>
